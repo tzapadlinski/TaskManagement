@@ -4,7 +4,6 @@ import java.time.LocalDate;
 
 public class Manager extends Employee{
 
-
     //TODO - zmiana wyjatku
     public void extendProjectTime(Project project, LocalDate newProjectDeadline) //throws Wyjatek zrobiony przez Kube
     {
@@ -17,6 +16,8 @@ public class Manager extends Employee{
             project.deadline = newProjectDeadline;
         }
     }
+
+
 
     public void assignTask(Worker worker, Task taskToAssign) {
         worker.tasksList.add(taskToAssign);
