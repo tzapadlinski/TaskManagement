@@ -1,5 +1,6 @@
+package com.structure;
+
 import java.time.LocalDate;
-import java.util.ArrayList;
 
 public class Manager extends Employee{
 

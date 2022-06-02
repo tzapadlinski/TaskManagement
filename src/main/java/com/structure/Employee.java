@@ -1,4 +1,4 @@
-import java.util.ArrayList;
+package com.structure;
 
 public class Employee {
     protected int employeeID;

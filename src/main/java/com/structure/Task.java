@@ -1,4 +1,4 @@
-
+package com.structure;
 
 import java.time.LocalDate;
 

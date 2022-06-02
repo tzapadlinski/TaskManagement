@@ -1,3 +1,5 @@
+package com.structure;
+
 public enum Position {
     ANALITYK,
     TESTER,

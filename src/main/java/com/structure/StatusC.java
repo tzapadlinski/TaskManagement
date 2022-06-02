@@ -1,4 +1,4 @@
-
+package com.structure;
 
 public class StatusC {
 	

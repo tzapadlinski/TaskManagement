@@ -1,3 +1,5 @@
+package com.structure;
+
 import java.util.ArrayList;
 
 public class Worker extends Employee{

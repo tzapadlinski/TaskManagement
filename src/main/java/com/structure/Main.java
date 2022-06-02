@@ -1,3 +1,4 @@
+package com.structure;
 
 public class Main {
 

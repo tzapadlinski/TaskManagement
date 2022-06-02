@@ -1,10 +1,12 @@
+package com.structure;
+
 import java.time.LocalDate;
 
 public class ProjectLog {
     private boolean succeeded;
     private String filename;
-    //private Manager projectLeader;
-    //private []Employee employees;
+    //private com.structure.Manager projectLeader;
+    //private []com.structure.Employee employees;
     private LocalDate startTimestamp;
     private LocalDate deadline;
     private String details;
@@ -27,7 +29,7 @@ public class ProjectLog {
     //TODO
     @Override
     public String toString() {
-        return "ProjectLog{" +
+        return "com.structure.ProjectLog{" +
                 "details='" + details + '\'' +
                 '}';
     }
