@@ -1,5 +1,9 @@
 package com.example.taskmanagement;
 
+import com.structure.Project;
+import com.structure.StaticContainer;
+
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -8,15 +12,19 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import javafx.collections.FXCollections;
 
 public class K_Controller {
     @FXML
     private Button logoutButton;
     private Pane logoutPane;
+    @FXML
     private ListView unitView;
+    @FXML
     private ListView employeeView;
     @FXML
     private Button actionButton;
+    @FXML
     private Button setTaskButton;
 
     Stage stage;
@@ -41,7 +49,15 @@ public class K_Controller {
     
     @FXML
     public void initialize() {
+    	StaticContainer inicjalizacja = new StaticContainer();
         actionButton.setVisible(false);
+        ObservableList<String> items = FXCollections.observableArrayList ();
+        for(Project i : StaticContainer.projectList)
+        {
+        	items.add(i.getShortcut());
+        	System.out.println(i);
+        }
+        unitView.setItems(items);
     }
     
     

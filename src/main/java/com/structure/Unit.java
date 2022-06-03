@@ -10,14 +10,16 @@ public abstract class Unit {
 	protected Manager manager; 
 	protected String description;
 	protected StatusC.stat s;
+	protected String name;
 	
-	public Unit(LocalDate deadline, LocalDate start, Manager manager, String description, StatusC.stat s, int id) {
+	public Unit(LocalDate deadline, LocalDate start, Manager manager, String description, StatusC.stat s, int id, String name) {
 		this.deadline = deadline;
 		this.manager = manager;
 		this.description = description;
 		this.s = s;
 		this.id = id;
 		startDate = start;
+		this.name = name;
 	}
 	
 	public int getID()

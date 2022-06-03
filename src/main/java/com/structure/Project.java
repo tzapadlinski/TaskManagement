@@ -8,8 +8,8 @@ import java.util.List;
 
 public class Project extends Unit {
 
-	public Project(LocalDate deadline,LocalDate start, Manager manager, String description, StatusC.stat s, int id) {
-		super(deadline, start, manager, description, s, id);
+	public Project(LocalDate deadline,LocalDate start, Manager manager, String description, StatusC.stat s, int id, String name) {
+		super(deadline, start, manager, description, s, id, name);
 		// TODO Auto-generated constructor stub
 	}
 	
@@ -43,5 +43,9 @@ public class Project extends Unit {
 		// TODO Auto-generated method stub
 		return "Projekt [deadline=" + deadline + ", manager=" + manager + ", description=" + description + "]";
 	}
-
+	
+	public String getShortcut()
+	{
+		return "Projekt "+ name +" status: "+ s;
+	}
 }
