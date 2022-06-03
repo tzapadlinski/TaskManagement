@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Arc?>
+
+
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/18" fx:controller="C">
+   <children>
+      <AnchorPane layoutX="-159.0" layoutY="-199.0" prefHeight="426.0" prefWidth="511.0">
+         <children>
+            <Arc fill="DODGERBLUE" layoutX="259.0" layoutY="301.0" length="270.0" radiusX="100.0" radiusY="100.0" startAngle="45.0" stroke="BLACK" strokeType="INSIDE" type="ROUND" />
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>
