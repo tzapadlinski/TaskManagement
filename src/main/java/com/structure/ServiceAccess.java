@@ -10,18 +10,24 @@ public class ServiceAccess {
         accounts = new ArrayList<>();
     }
 
-    //TODO disable adding accounts with same logins
-    public boolean addAccount(Account account){
+    public boolean addAccount(Account account, Employee owner){
+        if (existingUser(account))
+            return false;
+        account.setOwner(owner);
         accounts.add(account);
         return true;
     }
 
-    private boolean existingUser(){
+    private boolean existingUser(Account checked){
+        for (Account existing : accounts) {
+            if (existing.getLogin().equals(checked.getLogin()))
+                return true;
+        }
         return false;
     }
 
     public Employee accountInBase(Account checked){
-        for (Account existing:accounts) {
+        for (Account existing : accounts) {
             if(checked.equals(existing))
                 return existing.getOwner();
         }

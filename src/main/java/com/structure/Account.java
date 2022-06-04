@@ -24,6 +24,10 @@ public class Account {
         return owner;
     }
 
+    public void setOwner(Employee owner) {
+        this.owner = owner;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
