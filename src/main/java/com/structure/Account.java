@@ -3,7 +3,7 @@ package com.structure;
 import java.util.Objects;
 
 public class Account {
-    private String login;
+    private final String login;
     private String password;
     private Employee owner;
 

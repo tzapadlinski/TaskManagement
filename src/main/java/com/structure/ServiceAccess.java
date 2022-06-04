@@ -11,9 +11,13 @@ public class ServiceAccess {
     }
 
     //TODO disable adding accounts with same logins
-    public boolean addAccount(Account account, Employee employee){
+    public boolean addAccount(Account account){
         accounts.add(account);
         return true;
+    }
+
+    private boolean existingUser(){
+        return false;
     }
 
     public Employee accountInBase(Account checked){
