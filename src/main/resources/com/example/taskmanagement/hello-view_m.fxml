@@ -4,9 +4,10 @@
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.layout.Pane?>
 
-<Pane fx:id="logoutPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.taskmanagement.M_Controller">
+<Pane fx:id="logoutPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.taskmanagement.workerController">
    <children>
       <ListView fx:id="taskListView" layoutX="14.0" layoutY="14.0" prefHeight="373.0" prefWidth="355.0" />
       <Button fx:id="logoutButton" layoutX="482.0" layoutY="16.0" mnemonicParsing="false" onAction="#logout" prefHeight="27.0" prefWidth="104.0" text="Wyloguj" />
+      <Button fx:id="enterTaskButton" layoutX="482.0" layoutY="102.0" mnemonicParsing="false" onAction="#switchToTaskScene" prefHeight="27.0" prefWidth="104.0" text="Wejdź" />
    </children>
 </Pane>

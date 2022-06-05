@@ -40,7 +40,7 @@ public class Task extends Unit {
 
 	public String getShortcut()
 	{
-		return "Task "+ name +" status: "+ s;
+		return "Task - "+ name +", status: "+ s;
 	}
 
 }

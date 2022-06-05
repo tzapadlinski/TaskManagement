@@ -30,7 +30,7 @@ public class StaticContainer {
 
 		//testy listy pracownika
 		Worker w1 = new Worker(1, "Adam", "Nowak", Position.PROGRAMISTA);
-		w1.dodajPrzykladowyTask(LocalDate.parse("2020-01-01"),LocalDate.parse("2019-01-01"), "Dwie funkcje", StatusC.stat.nowy, 1, "Pierwszy task");
+		w1.dodajPrzykladowyTask(LocalDate.parse("2020-01-01"),LocalDate.parse("2019-01-01"), "Dwie funkcje", StatusC.stat.nowy, 1, "Pierwsze zadanie");
 		WorkerList.add(w1);
 
 	}
