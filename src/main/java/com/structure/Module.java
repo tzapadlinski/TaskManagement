@@ -53,5 +53,10 @@ public class Module extends Unit {
 		// TODO Auto-generated method stub
 		return "Modul [deadline=" + deadline + ", manager=" + manager + ", description=" + description + "]";
 	}
+	
+	@Override
+	public String toString() {
+		return "Modul "+ name +" status: "+ s;
+	}
 
 }

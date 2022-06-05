@@ -21,11 +21,21 @@ public class StaticContainer {
 		raportList.add("svegqrcd");
 		raportList.add("svcdgrdsv");
 		
+		Project p = new Project(LocalDate.parse("2020-01-01"),LocalDate.parse("2019-01-01"), null, "Opis 5", StatusC.stat.nowy, 10, "Nazwa 5");
+		try {
+			Module m1 = new Module(LocalDate.parse("2020-01-01"),LocalDate.parse("2019-01-01"), "Opis 1", StatusC.stat.nowy, 10, "Nazwa 1",p);
+			p.addModule(m1);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		projectList.add(new Project(LocalDate.parse("2020-01-01"),LocalDate.parse("2019-01-01"), null, "Opis 1", StatusC.stat.nowy, 10, "Nazwa 1"));
 		projectList.add(new Project(LocalDate.parse("2020-01-01"),LocalDate.parse("2019-01-01"), null, "Opis 2", StatusC.stat.nowy, 10, "Nazwa 2"));
 		projectList.add(new Project(LocalDate.parse("2020-01-01"),LocalDate.parse("2019-01-01"), null, "Opis 3", StatusC.stat.nowy, 10, "Nazwa 3"));
 		projectList.add(new Project(LocalDate.parse("2020-01-01"),LocalDate.parse("2019-01-01"), null, "Opis 4", StatusC.stat.nowy, 10, "Nazwa 4"));
-
+		projectList.add(p);
+		
 		System.out.println("koniec");
 	}
 
