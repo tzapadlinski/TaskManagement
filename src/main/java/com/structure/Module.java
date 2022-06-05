@@ -12,7 +12,7 @@ public class Module extends Unit {
 	
 
 	public Module(LocalDate deadline,LocalDate start, String description, StatusC.stat s, int id, String name, Project proj) throws Exception {
-		super(deadline, start,  null, description, s, id, name);
+		super(deadline, start,  proj.getManager(), description, s, id, name);
 		// TODO Auto-generated constructor stub
 		if(deadline.compareTo(proj.getDeadline())<0)
 			throw new Exception("blad daty");
@@ -27,12 +27,12 @@ public class Module extends Unit {
 		return projectID; 
 	}
 	
-	public void addModule(Task t)
+	public void addTask(Task t)
 	{
 		tasksSet.add(t);
 	}
 	
-	public void modyfiModule(Task t, int tId)
+	public void modyfitask(Task t, int tId)
 	{
 		int index = 0;
 		for(Task i : tasksSet)
@@ -53,5 +53,16 @@ public class Module extends Unit {
 		// TODO Auto-generated method stub
 		return "Modul [deadline=" + deadline + ", manager=" + manager + ", description=" + description + "]";
 	}
+	
+	@Override
+	public String toString() {
+		return "Modul "+ name +" status: "+ s;
+	}
+
+	public List<Task> getTasksSet() {
+		return tasksSet;
+	}
+	
+	
 
 }

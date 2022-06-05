@@ -48,4 +48,17 @@ public class Project extends Unit {
 	{
 		return "Projekt "+ name +" status: "+ s;
 	}
+
+	@Override
+	public String toString() {
+		return "Projekt "+ name +" status: "+ s;
+	}
+
+	public List<Module> getModuleSet() {
+		return moduleSet;
+	}
+	
+	
+	
+	
 }

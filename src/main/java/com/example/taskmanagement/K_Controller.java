@@ -1,15 +1,27 @@
 package com.example.taskmanagement;
 
+import java.time.LocalDate;
+import java.util.List;
+
 import com.structure.Project;
 import com.structure.StaticContainer;
+import com.structure.StatusC;
+import com.structure.Task;
+import com.structure.Tester;
+import com.structure.Worker;
+import com.structure.Manager;
+import com.structure.Module;
 
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ListView;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.collections.FXCollections;
@@ -26,6 +38,9 @@ public class K_Controller {
     private Button actionButton;
     @FXML
     private Button setTaskButton;
+    
+    private enum activeView {project, module, task,taskFocused};
+    private activeView activ;
 
     Stage stage;
 
@@ -51,13 +66,170 @@ public class K_Controller {
     public void initialize() {
     	StaticContainer inicjalizacja = new StaticContainer();
         actionButton.setVisible(false);
-        ObservableList<String> items = FXCollections.observableArrayList ();
+        activ = activeView.project;
+        ObservableList<Project> items = FXCollections.observableArrayList ();
         for(Project i : StaticContainer.projectList)
         {
-        	items.add(i.getShortcut());
-        	System.out.println(i);
+        	items.add(i);
+        	//System.out.println(i);
         }
         unitView.setItems(items);
+        
+        unitView.setOnMouseClicked(new EventHandler<MouseEvent>() {
+
+            @Override
+            public void handle(MouseEvent event) {
+            	
+            	if(activ == activeView.project)
+            	{
+            		if(event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2) {
+            			System.out.println("clicked on " + unitView.getSelectionModel().getSelectedItem());
+            			
+            			 ObservableList<Module> itemsM = FXCollections.observableArrayList ();
+            			 Project p = (Project) unitView.getSelectionModel().getSelectedItem();
+            			 List<Module> mList = p.getModuleSet();
+            		     for(Module i : mList)
+            		     {
+            		      	itemsM.add(i);
+            		       	//System.out.println(i);
+            		     }
+            		     unitView.setItems(itemsM);
+            		     activ = activeView.module;
+            		     StaticContainer.setModuleList(mList);
+            		}
+            	}else if(activ == activeView.module)
+            	{
+            		if(event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2) {
+            			System.out.println("clicked on " + unitView.getSelectionModel().getSelectedItem());
+            			
+            			 ObservableList<Task> itemsT = FXCollections.observableArrayList ();
+            			 Module m = (Module) unitView.getSelectionModel().getSelectedItem();
+            			 List<Task> tList = m.getTasksSet();
+            		     for(Task i : tList)
+            		     {
+            		      	itemsT.add(i);
+            		       	//System.out.println(i);
+            		     }
+            		     unitView.setItems(itemsT);
+            		     activ = activeView.task;
+            		     StaticContainer.setTaskList(tList);
+            		}
+            	}else if(activ == activeView.task)
+            	{
+            		if(event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2) {
+            			System.out.println("clicked on " + unitView.getSelectionModel().getSelectedItem());
+            			
+            			 ObservableList<String> itemsS = FXCollections.observableArrayList ();
+            			 Task t = (Task) unitView.getSelectionModel().getSelectedItem();
+            			 
+            			 LocalDate deadline = t.getDeadline();
+            			 itemsS.add("Deadline: "+ deadline.toString());
+            			 Manager manager = t.getManager();
+            			 itemsS.add(manager.toString());
+            			 String description = t.getDescription();
+            			 itemsS.add("Opis: "+description);
+            			 StatusC.stat s = t.getS();
+            			 itemsS.add("Status: "+s.toString());
+            			 int id = t.getID();
+            			 itemsS.add(String.valueOf("id: " +id));
+            			 LocalDate startDate = t.getStartDate();
+            			 itemsS.add("Data poczatkowa: "+startDate.toString());
+            			 String name = t.getName();
+            			 itemsS.add("Nazwa: "+name);
+            			 int moduleId = t.getModuleID();
+            			 itemsS.add(String.valueOf("ID modulu: "+moduleId));
+            		     
+            		     unitView.setItems(itemsS);
+            		     activ = activeView.taskFocused;
+            		     
+            		}
+            	}
+                
+            }
+        });
+    }
+    
+    public void goBack(ActionEvent event)
+    {
+    	if(activ == activeView.module)
+    	{
+    		ObservableList<Project> itemsP = FXCollections.observableArrayList ();
+            for(Project i : StaticContainer.projectList)
+            {
+            	itemsP.add(i);
+            	//System.out.println(i);
+            }
+            unitView.setItems(itemsP);
+            activ = activeView.project;
+    	}else if(activ == activeView.task)
+    	{
+    		ObservableList<Module> itemsM = FXCollections.observableArrayList ();
+            for(Module i : StaticContainer.moduleList)
+            {
+            	itemsM.add(i);
+            	//System.out.println(i);
+            }
+            unitView.setItems(itemsM);
+            activ = activeView.module;
+    	}
+    	else if(activ == activeView.taskFocused)
+    	{
+    		ObservableList<Task> itemsT = FXCollections.observableArrayList ();
+            for(Task i : StaticContainer.taskList)
+            {
+            	itemsT.add(i);
+            	//System.out.println(i);
+            }
+            unitView.setItems(itemsT);
+            activ = activeView.module;
+    	}
+    }
+    
+    private void setEmployee(StatusC.stat status)
+    {
+    	String buttonText = "";
+    	ObservableList<String> items = FXCollections.observableArrayList ();
+    	switch (status)
+    	{
+    		
+    		case nowy:
+    	        for(Worker i : StaticContainer.workerList)
+    	        {
+    	        	items.add(i.getEmployeeData());
+    	        	System.out.println(i);
+    	        }
+    	        buttonText = "Przydziel pracownika";
+    	        break;
+    		case doPoprawy:
+    			
+    	        for(Worker i : StaticContainer.workerList)
+    	        {
+    	        	items.add(i.getEmployeeData());
+    	        	System.out.println(i);
+    	        }
+    	        buttonText = "Przydziel pracownika";
+    	        break;
+    		case doTestowania:
+    			
+    	        for(Tester i : StaticContainer.testerList)
+    	        {
+    	        	items.add(i.getEmployeeData());
+    	        	System.out.println(i);
+    	        }
+    	        buttonText = "Przydziel testera";
+    	        break;
+    	     default:
+    	    	 
+    	    	 items.add("Nie mozna przydzielic, status zadania: "+status);
+    	    	 break;
+    	};
+    	
+    	employeeView.setItems(items);
+    	if(!buttonText.equals(""))
+    	{
+    		actionButton.setText(buttonText);
+    		actionButton.setVisible(true);
+    	}
     }
     
     
