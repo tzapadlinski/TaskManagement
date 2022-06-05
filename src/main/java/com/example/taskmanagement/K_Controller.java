@@ -1,9 +1,13 @@
 package com.example.taskmanagement;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import com.structure.Project;
 import com.structure.StaticContainer;
+import com.structure.StatusC;
+import com.structure.Task;
+import com.structure.Manager;
 import com.structure.Module;
 
 import javafx.collections.ObservableList;
@@ -33,7 +37,7 @@ public class K_Controller {
     @FXML
     private Button setTaskButton;
     
-    private enum activeView {project, module, task};
+    private enum activeView {project, module, task,taskFocused};
     private activeView activ;
 
     Stage stage;
@@ -89,6 +93,53 @@ public class K_Controller {
             		     }
             		     unitView.setItems(itemsM);
             		     activ = activeView.module;
+            		     StaticContainer.setModuleList(mList);
+            		}
+            	}else if(activ == activeView.module)
+            	{
+            		if(event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2) {
+            			System.out.println("clicked on " + unitView.getSelectionModel().getSelectedItem());
+            			
+            			 ObservableList<Task> itemsT = FXCollections.observableArrayList ();
+            			 Module m = (Module) unitView.getSelectionModel().getSelectedItem();
+            			 List<Task> tList = m.getTasksSet();
+            		     for(Task i : tList)
+            		     {
+            		      	itemsT.add(i);
+            		       	//System.out.println(i);
+            		     }
+            		     unitView.setItems(itemsT);
+            		     activ = activeView.task;
+            		     StaticContainer.setTaskList(tList);
+            		}
+            	}else if(activ == activeView.task)
+            	{
+            		if(event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2) {
+            			System.out.println("clicked on " + unitView.getSelectionModel().getSelectedItem());
+            			
+            			 ObservableList<String> itemsS = FXCollections.observableArrayList ();
+            			 Task t = (Task) unitView.getSelectionModel().getSelectedItem();
+            			 
+            			 LocalDate deadline = t.getDeadline();
+            			 itemsS.add("Deadline: "+ deadline.toString());
+            			 Manager manager = t.getManager();
+            			 itemsS.add(manager.toString());
+            			 String description = t.getDescription();
+            			 itemsS.add("Opis: "+description);
+            			 StatusC.stat s = t.getS();
+            			 itemsS.add("Status: "+s.toString());
+            			 int id = t.getID();
+            			 itemsS.add(String.valueOf("id: " +id));
+            			 LocalDate startDate = t.getStartDate();
+            			 itemsS.add("Data poczatkowa: "+startDate.toString());
+            			 String name = t.getName();
+            			 itemsS.add("Nazwa: "+name);
+            			 int moduleId = t.getModuleID();
+            			 itemsS.add(String.valueOf("ID modulu: "+moduleId));
+            		     
+            		     unitView.setItems(itemsS);
+            		     activ = activeView.taskFocused;
+            		     
             		}
             	}
                 
@@ -108,6 +159,27 @@ public class K_Controller {
             }
             unitView.setItems(itemsP);
             activ = activeView.project;
+    	}else if(activ == activeView.task)
+    	{
+    		ObservableList<Module> itemsM = FXCollections.observableArrayList ();
+            for(Module i : StaticContainer.moduleList)
+            {
+            	itemsM.add(i);
+            	//System.out.println(i);
+            }
+            unitView.setItems(itemsM);
+            activ = activeView.module;
+    	}
+    	else if(activ == activeView.taskFocused)
+    	{
+    		ObservableList<Task> itemsT = FXCollections.observableArrayList ();
+            for(Task i : StaticContainer.taskList)
+            {
+            	itemsT.add(i);
+            	//System.out.println(i);
+            }
+            unitView.setItems(itemsT);
+            activ = activeView.module;
     	}
     }
     

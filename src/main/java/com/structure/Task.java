@@ -7,7 +7,7 @@ public class Task extends Unit {
 	private int moduleID;
 
 	public Task(LocalDate deadline, LocalDate start, String description, StatusC.stat s, int id,String name, Module mod) throws Exception{
-		super(deadline, start, null, description, s, id, name);
+		super(deadline, start, mod.getManager(), description, s, id, name);
 		// TODO Auto-generated constructor stub
 		if(deadline.compareTo(mod.getDeadline())<0)
 			throw new Exception("blad daty");
@@ -42,5 +42,19 @@ public class Task extends Unit {
 	{
 		return "Task "+ name +" status: "+ s;
 	}
+	
+	@Override
+	public String toString() {
+		return "Zadanie "+ name +" status: "+ s;
+	}
+
+	public int getModuleID() {
+		return moduleID;
+	}
+	
+	
+	
+	
+
 
 }

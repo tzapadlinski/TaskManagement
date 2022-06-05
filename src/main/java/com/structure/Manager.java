@@ -23,4 +23,17 @@ public class Manager extends Employee{
         worker.tasksList.add(taskToAssign);
     }
 
+
+
+	@Override
+	public String toString() {
+		return "Manager [employeeID=" + employeeID + ", firstName=" + firstName + ", secondName=" + secondName + "]";
+	}
+	
+	 public Manager(int employeeID, String firstName, String secondName) {
+	        super(employeeID,firstName,secondName);
+	    }
+    
+    
+
 }

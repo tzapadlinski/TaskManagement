@@ -35,6 +35,26 @@ public abstract class Unit {
 	public abstract String getRaport();
 	//		return "Jednostka [deadline=" + deadline + ", manager=" + manager + ", description=" + description + "]";
 
+	public LocalDate getStartDate() {
+		return startDate;
+	}
+
+	public Manager getManager() {
+		return manager;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public StatusC.stat getS() {
+		return s;
+	}
+
+	public String getName() {
+		return name;
+	}
+
 	
 	
 	
