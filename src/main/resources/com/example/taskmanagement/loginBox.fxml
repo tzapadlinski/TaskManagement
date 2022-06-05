@@ -11,20 +11,24 @@
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="335.0" prefWidth="316.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.taskmanagement.LoginController">
    <children>
-      <Button fx:id="button" layoutX="130.0" layoutY="269.0" mnemonicParsing="false" onAction="#log" prefHeight="25.0" prefWidth="58.0" text="Zaloguj" />
-      <PasswordField fx:id="password" layoutX="109.0" layoutY="232.0" />
-      <TextField fx:id="userName" layoutX="109.0" layoutY="203.0" />
-      <Label layoutX="70.0" layoutY="207.0" prefHeight="17.0" prefWidth="37.0" text="Login" />
-      <Label layoutX="70.0" layoutY="236.0" prefHeight="17.0" prefWidth="37.0" text="Hasło" />
-      <ImageView fitHeight="126.0" fitWidth="141.0" layoutX="88.0" layoutY="42.0">
+      <Button fx:id="button" layoutX="131.0" layoutY="243.0" mnemonicParsing="false" onAction="#log" prefHeight="25.0" prefWidth="58.0" text="Zaloguj" />
+      <PasswordField fx:id="password" layoutX="109.0" layoutY="212.0" />
+      <TextField fx:id="userName" layoutX="109.0" layoutY="182.0" />
+      <Label layoutX="71.0" layoutY="186.0" prefHeight="17.0" prefWidth="37.0" text="Login" />
+      <Label layoutX="71.0" layoutY="216.0" prefHeight="17.0" prefWidth="37.0" text="Hasło" />
+      <ImageView fitHeight="126.0" fitWidth="141.0" layoutX="89.0" layoutY="22.0">
          <image>
             <Image url="@images/logo.png" />
          </image>
       </ImageView>
-      <Label layoutX="122.0" layoutY="161.0" prefHeight="34.0" prefWidth="72.0" text="Jira 2.0">
+      <Label layoutX="122.0" layoutY="134.0" prefHeight="34.0" prefWidth="72.0" text="Jira 2.0">
          <font>
             <Font name="Comic Sans MS" size="18.0" />
          </font>
       </Label>
+      <Label fx:id="label" layoutX="46.0" layoutY="268.0" prefHeight="57.0" prefWidth="224.0" textAlignment="CENTER" textFill="#462d12" wrapText="true">
+         <font>
+            <Font name="Comic Sans MS" size="14.0" />
+         </font></Label>
    </children>
 </Pane>
