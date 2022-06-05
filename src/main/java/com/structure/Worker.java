@@ -1,5 +1,6 @@
 package com.structure;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class Worker extends Employee{
@@ -8,6 +9,7 @@ public class Worker extends Employee{
 
     public Worker(int employeeID, String firstName, String secondName, Position position) {
         super(employeeID, firstName, secondName);
+        tasksList = new ArrayList<>();
         this.position = position;
     }
 
@@ -45,8 +47,24 @@ public class Worker extends Employee{
         return -1;
     }
 
+    public void dodajPrzykladowyTask(LocalDate deadline, LocalDate start, String description, StatusC.stat s, int id, String name) {
+        Task task;
+        try {
+            task = new Task(deadline, start, description, s, id, name);
+            this.tasksList.add(task);
+        } catch (Exception e)
+        {
+            System.out.println("Nie udalo sie utworzyc tasku");
+        }
+
+
+    }
+
     public void setPosition(Position position) {
         this.position = position;
     }
 
+    public ArrayList<Task> getTasksList() {
+        return tasksList;
+    }
 }
