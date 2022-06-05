@@ -45,7 +45,7 @@ public class M_Controller {
         StaticContainer inicjalizacja = new StaticContainer();
         //actionButton.setVisible(false);
         ObservableList<String> items = FXCollections.observableArrayList ();
-        for(Task i : StaticContainer.WorkerList.get(0).getTasksList())
+        for(Task i : StaticContainer.workerList.get(0).getTasksList())
         {
             items.add(i.getShortcut());
             System.out.println(i);
