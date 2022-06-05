@@ -10,4 +10,5 @@
       <Button fx:id="logoutButton" layoutX="482.0" layoutY="16.0" mnemonicParsing="false" onAction="#logout" prefHeight="27.0" prefWidth="104.0" text="Wyloguj" />
       <Button fx:id="enterTaskButton" layoutX="482.0" layoutY="102.0" mnemonicParsing="false" onAction="#switchToTaskScene" prefHeight="27.0" prefWidth="104.0" text="Wejdź" />
    </children>
+
 </Pane>

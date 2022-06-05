@@ -12,7 +12,9 @@
       <Label fx:id="taskLabel" alignment="CENTER" layoutX="50.0" layoutY="35.0" prefHeight="39.0" prefWidth="515.0" text="Label">
          <font>
             <Font size="27.0" />
+
          </font>
       </Label>
    </children>
 </Pane>
+
