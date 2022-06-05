@@ -10,9 +10,9 @@ public class StaticContainer {
 	public static List<Project> projectList = new ArrayList<>();
 	public static List<Module> moduleList = new ArrayList<>();
 	public static List<Task> taskList = new ArrayList<>();
-	public static List<Worker> WorkerList = new ArrayList<>();
-	public static List<Manager> ManagerList = new ArrayList<>();
-	public static List<String> TesterList = new ArrayList<>(); //jak bedzie tester
+	public static List<Worker> workerList = new ArrayList<>();
+	public static List<Manager> managerList = new ArrayList<>();
+	public static List<Tester> testerList = new ArrayList<>(); //jak bedzie tester
 	
 	{
 		//do testowania
@@ -51,7 +51,7 @@ public class StaticContainer {
 		//testy listy pracownika
 		Worker w1 = new Worker(1, "Adam", "Nowak", Position.PROGRAMISTA);
 		w1.dodajPrzykladowyTask(LocalDate.parse("2020-01-01"),LocalDate.parse("2019-01-01"), "Dwie funkcje", StatusC.stat.nowy, 1, "Pierwszy task");
-		WorkerList.add(w1);
+		workerList.add(w1);
 
 	}
 

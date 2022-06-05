@@ -16,6 +16,11 @@ public class Employee {
     public int getEmployeeID() {
         return employeeID;
     }
+    
+    public String getEmployeeData()
+    {
+    	return String.valueOf(secondName+" "+firstName);
+    }
 
 
 }

@@ -7,6 +7,8 @@ import com.structure.Project;
 import com.structure.StaticContainer;
 import com.structure.StatusC;
 import com.structure.Task;
+import com.structure.Tester;
+import com.structure.Worker;
 import com.structure.Manager;
 import com.structure.Module;
 
@@ -180,6 +182,53 @@ public class K_Controller {
             }
             unitView.setItems(itemsT);
             activ = activeView.module;
+    	}
+    }
+    
+    private void setEmployee(StatusC.stat status)
+    {
+    	String buttonText = "";
+    	ObservableList<String> items = FXCollections.observableArrayList ();
+    	switch (status)
+    	{
+    		
+    		case nowy:
+    	        for(Worker i : StaticContainer.workerList)
+    	        {
+    	        	items.add(i.getEmployeeData());
+    	        	System.out.println(i);
+    	        }
+    	        buttonText = "Przydziel pracownika";
+    	        break;
+    		case doPoprawy:
+    			
+    	        for(Worker i : StaticContainer.workerList)
+    	        {
+    	        	items.add(i.getEmployeeData());
+    	        	System.out.println(i);
+    	        }
+    	        buttonText = "Przydziel pracownika";
+    	        break;
+    		case doTestowania:
+    			
+    	        for(Tester i : StaticContainer.testerList)
+    	        {
+    	        	items.add(i.getEmployeeData());
+    	        	System.out.println(i);
+    	        }
+    	        buttonText = "Przydziel testera";
+    	        break;
+    	     default:
+    	    	 
+    	    	 items.add("Nie mozna przydzielic, status zadania: "+status);
+    	    	 break;
+    	};
+    	
+    	employeeView.setItems(items);
+    	if(!buttonText.equals(""))
+    	{
+    		actionButton.setText(buttonText);
+    		actionButton.setVisible(true);
     	}
     }
     
