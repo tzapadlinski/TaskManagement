@@ -15,7 +15,8 @@ public class LoginTest extends Application {
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("loginBox.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
-        //stage.getIcons().add(new Image("")); TODO weź ktoś dodaj ten obrazek bo mnie pojebie zaraz z tą ścieżką
+        stage.getIcons().add(new Image("file:src\\main\\resources" +
+                "\\com\\example\\taskmanagement\\images\\logo.png")); //!here's path to images!
         stage.setTitle("Log in to our service!");
         stage.setScene(scene);
         stage.show();
