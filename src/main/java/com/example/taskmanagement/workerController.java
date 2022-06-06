@@ -28,10 +28,6 @@ import java.util.ResourceBundle;
 
 public class workerController implements Initializable {
     @FXML
-    private Button logoutButton;
-    @FXML
-    private Button enterTaskButton;
-    @FXML
     private Pane logoutPane;
     @FXML
     private ListView taskListView;
@@ -93,22 +89,6 @@ public class workerController implements Initializable {
         stage.show();
     }
 
-    /*
-    @FXML
-    public void initialize() {
-        StaticContainer inicjalizacja = new StaticContainer();
-        //actionButton.setVisible(false);
-        ObservableList<String> items = FXCollections.observableArrayList ();
-        for(Task i : StaticContainer.WorkerList.get(0).getTasksList())
-        {
-            items.add(i.getShortcut());
-            System.out.println(i);
-        }
-        taskListView.setItems(items);
-    }
-     */
-
-
     public void switchToTaskScene(ActionEvent event) throws IOException {
         try {
             currentTask = (Task) taskListView.getSelectionModel().getSelectedItem();
@@ -132,9 +112,12 @@ public class workerController implements Initializable {
     public void setCurrentWorker(Worker worker) {
         this.currentWorker = worker;
         this.workerNameLabel.setText(worker.getName());
+        this.currentWorker.refreshTasks();
     }
 
     public void updateList() {
+        this.currentWorker.refreshTasks();
+
         StaticContainer inicjalizacja = new StaticContainer();
         ObservableList<Task> items = FXCollections.observableArrayList ();
         for(Task i : currentWorker.getTasksList())

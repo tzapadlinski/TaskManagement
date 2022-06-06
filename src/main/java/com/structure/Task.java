@@ -45,7 +45,7 @@ public class Task extends Unit {
 
 	@Override
 	public String toString() {
-		return "Zadanie "+ name +" | Status: "+ s;
+		return "Zadanie "+ name +" | Status: "+ s + " | " + deadline;
 	}
 
 	public int getModuleID() {

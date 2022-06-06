@@ -2,10 +2,32 @@ package com.structure;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class Worker extends Employee{
     protected Position position;
     ArrayList<Task> tasksList;
+
+    /**
+     * Komparator sluzacy do sortowania listy z zdaniami koljeno od wRealizacji do ukończonych
+     */
+    class tasksComparator implements Comparator<Task> {
+
+        // override the compare() method
+        @Override
+        public int compare(Task t1, Task t2)
+        {
+            if (t1.s == t2.s)
+                return 0;
+            else if (t1.s == StatusC.stat.ukończone && t2.s != StatusC.stat.ukończone)
+                return 1;
+            else if(t1.s != StatusC.stat.wRrealizacji && t2.s == StatusC.stat.wRrealizacji)
+                return 1;
+            else
+                return -1;
+        }
+    }
 
     public Worker(int employeeID, String firstName, String secondName, Position position) {
         super(employeeID, firstName, secondName);
@@ -84,6 +106,10 @@ public class Worker extends Employee{
 	public String toString() {
 		return String.valueOf(lastName+" "+firstName);
 	}
-    
+
+    public void refreshTasks() {
+        Collections.sort(this.tasksList, new tasksComparator());
+    }
+
     
 }

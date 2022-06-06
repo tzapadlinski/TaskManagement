@@ -32,11 +32,18 @@ public class StaticContainer {
 			Module m2 = new Module(LocalDate.parse("2020-01-01"),LocalDate.parse("2019-01-01"), "Opis 2 M", StatusC.stat.nowy, 10, "Nazwa 2 M",p);
 			p2.addModule(m2);
 			p.addModule(m1);
-			Task t1 = new Task(LocalDate.parse("2020-01-01"),LocalDate.parse("2019-01-01"), "Opis 1 T", StatusC.stat.nowy, 10, "Nazwa 1 T",m1);
-			Task t2 = new Task(LocalDate.parse("2020-01-01"),LocalDate.parse("2019-01-01"), "Opis 2 T", StatusC.stat.doTestowania, 10, "Nazwa 2 T",m1);
+			Task t1 = new Task(LocalDate.parse("2020-01-01"),LocalDate.parse("2019-01-01"), "Opis 1 T", StatusC.stat.ukończone, 10, "Nazwa 1 T",m1);
+			Task t11 = new Task(LocalDate.parse("2020-01-01"),LocalDate.parse("2019-01-01"), "Opis 1 T", StatusC.stat.wRrealizacji, 11, "Nazwa 2 T",m1);
+			Task t12 = new Task(LocalDate.parse("2020-01-01"),LocalDate.parse("2019-01-01"), "Opis 1 T", StatusC.stat.nowy, 12, "Nazwa 3 T",m1);
+			Task t2 = new Task(LocalDate.parse("2020-01-01"),LocalDate.parse("2019-01-01"), "Opis 2 T", StatusC.stat.doTestowania, 10, "Nazwa 2 T",m2);
 			m1.addTask(t1);
+			m1.addTask(t11);
+			m1.addTask(t12);
 			m2.addTask(t2);
+
 			w1.addTask(t1);
+			w1.addTask(t11);
+			w1.addTask(t12);
 			w2.addTask(t2);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
