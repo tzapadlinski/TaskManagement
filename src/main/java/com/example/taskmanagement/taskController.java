@@ -21,6 +21,8 @@ import java.net.URL;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
 
+import static java.time.temporal.ChronoUnit.DAYS;
+
 public class taskController {
 
     @FXML
@@ -63,6 +65,8 @@ public class taskController {
         items.add("Nazwa: "+name);
         int moduleId = task.getModuleID();
         items.add(String.valueOf("ID modulu: "+moduleId));
+        long pozostaloCzasu = DAYS.between(LocalDate.now(), deadline);
+        items.add(String.valueOf("Pozostało : "+pozostaloCzasu + " dni"));
 
         dataListView.setItems(items);
     }
@@ -77,12 +81,16 @@ public class taskController {
 
     public void endTaskAction(ActionEvent event) throws IOException{
         worker.endTask(task);
+        //odswiezanie
         this.setName(task.getShortcut());
+        this.loadList();
     }
 
     public void inProgress(ActionEvent event) throws IOException{
         worker.taskInProgress(task);
+        //odswiezanie
         this.setName(task.getShortcut());
+        this.loadList();
     }
 
     public void switchToWorkerScene(ActionEvent event) throws IOException {

@@ -40,12 +40,12 @@ public class Task extends Unit {
 
 	public String getShortcut()
 	{
-		return "Task - "+ name +", status: "+ s;
+		return "Zadanie - "+ name +" | Status: "+ s;
 	}
-	
+
 	@Override
 	public String toString() {
-		return "Zadanie "+ name +" status: "+ s;
+		return "Zadanie "+ name +" | Status: "+ s;
 	}
 
 	public int getModuleID() {
