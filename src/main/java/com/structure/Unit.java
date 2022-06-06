@@ -55,6 +55,10 @@ public abstract class Unit {
 		return name;
 	}
 
+	public void setS(StatusC.stat s) {
+		this.s = s;
+	}
+
 	
 	
 	

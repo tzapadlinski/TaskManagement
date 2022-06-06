@@ -8,6 +8,7 @@ import com.structure.StaticContainer;
 import com.structure.StatusC;
 import com.structure.Task;
 import com.structure.Tester;
+import com.structure.Unit;
 import com.structure.Worker;
 import com.structure.Manager;
 import com.structure.Module;
@@ -29,6 +30,7 @@ import javafx.collections.FXCollections;
 public class K_Controller {
     @FXML
     private Button logoutButton;
+    @FXML
     private Pane logoutPane;
     @FXML
     private ListView unitView;
@@ -38,6 +40,10 @@ public class K_Controller {
     private Button actionButton;
     @FXML
     private Button setTaskButton;
+    @FXML
+    private Button setTaskStatusButton;
+    @FXML
+    private Button syncButton;
     
     private enum activeView {project, module, task,taskFocused};
     private activeView activ;
@@ -66,6 +72,8 @@ public class K_Controller {
     public void initialize() {
     	StaticContainer inicjalizacja = new StaticContainer();
         actionButton.setVisible(false);
+        setTaskStatusButton.setVisible(false);
+        syncButton.setVisible(false);
         activ = activeView.project;
         ObservableList<Project> items = FXCollections.observableArrayList ();
         for(Project i : StaticContainer.projectList)
@@ -96,6 +104,24 @@ public class K_Controller {
             		     unitView.setItems(itemsM);
             		     activ = activeView.module;
             		     StaticContainer.setModuleList(mList);
+            		     setTaskStatusButton.setVisible(false);
+            		     ObservableList<StatusC.stat> itemsS = FXCollections.observableArrayList ();
+            		     employeeView.setItems(itemsS);
+            		}else if(event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 1)
+            		{
+            			System.out.println("selected " + unitView.getSelectionModel().getSelectedItem());
+            			
+            			Project p = (Project) unitView.getSelectionModel().getSelectedItem();
+            			StatusC.stat s = p.getS();
+            			if((s==StatusC.stat.anulowane)||(s==StatusC.stat.ukończone))
+            				return;
+            			
+            			ObservableList<StatusC.stat> itemsS = FXCollections.observableArrayList ();
+           			 	itemsS.add(StatusC.stat.anulowane);
+           			 	itemsS.add(StatusC.stat.ukończone);
+           			 	
+           			 	employeeView.setItems(itemsS);
+           			 	setTaskStatusButton.setVisible(true);
             		}
             	}else if(activ == activeView.module)
             	{
@@ -113,6 +139,24 @@ public class K_Controller {
             		     unitView.setItems(itemsT);
             		     activ = activeView.task;
             		     StaticContainer.setTaskList(tList);
+            		     setTaskStatusButton.setVisible(false);
+            		     ObservableList<StatusC.stat> itemsS = FXCollections.observableArrayList ();
+            		     employeeView.setItems(itemsS);
+            		}else if(event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 1)
+            		{
+            			System.out.println("selected " + unitView.getSelectionModel().getSelectedItem());
+            			
+            			Module m = (Module) unitView.getSelectionModel().getSelectedItem();
+            			StatusC.stat s = m.getS();
+            			if((s==StatusC.stat.anulowane)||(s==StatusC.stat.ukończone))
+            				return;
+            			
+            			ObservableList<StatusC.stat> itemsS = FXCollections.observableArrayList ();
+           			 	itemsS.add(StatusC.stat.anulowane);
+           			 	itemsS.add(StatusC.stat.ukończone);
+           			 	
+           			 	employeeView.setItems(itemsS);
+           			 	setTaskStatusButton.setVisible(true);
             		}
             	}else if(activ == activeView.task)
             	{
@@ -141,7 +185,26 @@ public class K_Controller {
             		     
             		     unitView.setItems(itemsS);
             		     activ = activeView.taskFocused;
+            		     setEmployee(s);
             		     
+            		     setTaskStatusButton.setVisible(false);
+            		     
+            		     
+            		}else if(event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 1)
+            		{
+            			System.out.println("selected " + unitView.getSelectionModel().getSelectedItem());
+            			
+            			Task t = (Task) unitView.getSelectionModel().getSelectedItem();
+            			StatusC.stat s = t.getS();
+            			if((s==StatusC.stat.anulowane)||(s==StatusC.stat.ukończone))
+            				return;
+            			
+            			ObservableList<StatusC.stat> itemsS = FXCollections.observableArrayList ();
+           			 	itemsS.add(StatusC.stat.anulowane);
+           			 	itemsS.add(StatusC.stat.ukończone);
+           			 	
+           			 	employeeView.setItems(itemsS);
+           			 	setTaskStatusButton.setVisible(true);
             		}
             	}
                 
@@ -151,6 +214,9 @@ public class K_Controller {
     
     public void goBack(ActionEvent event)
     {
+    	setTaskStatusButton.setVisible(false);
+	     ObservableList<StatusC.stat> itemsS = FXCollections.observableArrayList ();
+	     employeeView.setItems(itemsS);
     	if(activ == activeView.module)
     	{
     		ObservableList<Project> itemsP = FXCollections.observableArrayList ();
@@ -181,7 +247,8 @@ public class K_Controller {
             	//System.out.println(i);
             }
             unitView.setItems(itemsT);
-            activ = activeView.module;
+            activ = activeView.task;
+            actionButton.setVisible(false);
     	}
     }
     
@@ -229,6 +296,71 @@ public class K_Controller {
     	{
     		actionButton.setText(buttonText);
     		actionButton.setVisible(true);
+    	}
+    }
+    
+    
+    public void setTaskStatus(ActionEvent event)
+    {
+    	Unit u = (Unit) unitView.getSelectionModel().getSelectedItem();
+    	StatusC.stat s = (StatusC.stat) employeeView.getSelectionModel().getSelectedItem();
+    	u.setS(s);
+    	sync();
+    }
+    
+    
+    public void sync()
+    {
+    	if(activ == activeView.project)
+    	{
+    		ObservableList<Project> items = FXCollections.observableArrayList ();
+            for(Project i : StaticContainer.projectList)
+            {
+            	items.add(i);
+            	//System.out.println(i);
+            }
+            unitView.setItems(items);
+    	}
+    	else if(activ == activeView.module)
+    	{
+    		
+    			System.out.println("clicked on " + unitView.getSelectionModel().getSelectedItem());
+    			
+    			 ObservableList<Module> itemsM = FXCollections.observableArrayList ();
+    			 Project p = (Project) unitView.getSelectionModel().getSelectedItem();
+    			 List<Module> mList = p.getModuleSet();
+    		     for(Module i : mList)
+    		     {
+    		      	itemsM.add(i);
+    		       	//System.out.println(i);
+    		     }
+    		     unitView.setItems(itemsM);
+    		     activ = activeView.module;
+    		     StaticContainer.setModuleList(mList);
+    		     setTaskStatusButton.setVisible(false);
+    		     ObservableList<StatusC.stat> itemsS = FXCollections.observableArrayList ();
+    		     employeeView.setItems(itemsS);
+    		
+    	}else if(activ == activeView.task)
+    	{
+    		
+    			System.out.println("clicked on " + unitView.getSelectionModel().getSelectedItem());
+    			
+    			 ObservableList<Task> itemsT = FXCollections.observableArrayList ();
+    			 Module m = (Module) unitView.getSelectionModel().getSelectedItem();
+    			 List<Task> tList = m.getTasksSet();
+    		     for(Task i : tList)
+    		     {
+    		      	itemsT.add(i);
+    		       	//System.out.println(i);
+    		     }
+    		     unitView.setItems(itemsT);
+    		     activ = activeView.task;
+    		     StaticContainer.setTaskList(tList);
+    		     setTaskStatusButton.setVisible(false);
+    		     ObservableList<StatusC.stat> itemsS = FXCollections.observableArrayList ();
+    		     employeeView.setItems(itemsS);
+    		
     	}
     }
     

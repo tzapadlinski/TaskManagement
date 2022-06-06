@@ -31,7 +31,7 @@ public class StaticContainer {
 			p2.addModule(m2);
 			p.addModule(m1);
 			Task t1 = new Task(LocalDate.parse("2020-01-01"),LocalDate.parse("2019-01-01"), "Opis 1 T", StatusC.stat.nowy, 10, "Nazwa 1 T",m1);
-			Task t2 = new Task(LocalDate.parse("2020-01-01"),LocalDate.parse("2019-01-01"), "Opis 2 T", StatusC.stat.nowy, 10, "Nazwa 2 T",m1);
+			Task t2 = new Task(LocalDate.parse("2020-01-01"),LocalDate.parse("2019-01-01"), "Opis 2 T", StatusC.stat.doTestowania, 10, "Nazwa 2 T",m1);
 			m1.addTask(t1);
 			m2.addTask(t2);
 		} catch (Exception e) {
