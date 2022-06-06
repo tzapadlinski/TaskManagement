@@ -42,7 +42,6 @@ public class workerController implements Initializable {
     private String currentTaskString;
     private Task currentTask;
 
-
     private Stage stage;
     private Scene scene;
     private Parent root;
@@ -55,7 +54,7 @@ public class workerController implements Initializable {
         StaticContainer inicjalizacja = new StaticContainer();
         //actionButton.setVisible(false);
         ObservableList<Task> items = FXCollections.observableArrayList ();
-        for(Task i : StaticContainer.workerList.get(0).getTasksList())
+        for(Task i : StaticContainer.workerList.get(1).getTasksList())
         {
             items.add(i);
             System.out.println(i);
@@ -75,7 +74,7 @@ public class workerController implements Initializable {
 
     }
 
-    public void logout(ActionEvent event) {
+    public void logout(ActionEvent event) throws IOException {
         //dodanie nowego okna z potwierdzeniem
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Wylogowywanie");
@@ -86,7 +85,18 @@ public class workerController implements Initializable {
             stage = (Stage) logoutPane.getScene().getWindow();
             System.out.println("Wylogowano!");
             stage.close();
+
+            switchToLogout(event);
         }
+    }
+
+    public void switchToLogout(ActionEvent event) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("loginBox.fxml"));
+        Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.setTitle("Okno logowania");
+        stage.show();
     }
 
     /*
@@ -103,8 +113,6 @@ public class workerController implements Initializable {
         taskListView.setItems(items);
     }
      */
-
-
 
 
     public void switchToTaskScene(ActionEvent event) throws IOException {
