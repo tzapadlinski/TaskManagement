@@ -64,7 +64,15 @@ public class Worker extends Employee{
         this.position = position;
     }
 
+    public void addTask(Task task) {
+        this.tasksList.add(task);
+    }
+
     public ArrayList<Task> getTasksList() {
         return tasksList;
+    }
+
+    public Position getPosition() {
+        return position;
     }
 }

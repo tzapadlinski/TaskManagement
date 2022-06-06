@@ -5,13 +5,9 @@ import java.util.ArrayList;
 
 public class ServiceAccess {
 	
-    private ArrayList<Account> accounts;
+    private static ArrayList<Account> accounts = new ArrayList<>();
 
-    ServiceAccess(){
-        accounts = new ArrayList<>();
-    }
-
-    public boolean addAccount(Account account, Employee owner){
+    public static boolean addAccount(Account account, Employee owner){
         if (existingUser(account))
             return false;
         account.setOwner(owner);
@@ -19,7 +15,7 @@ public class ServiceAccess {
         return true;
     }
 
-    private boolean existingUser(Account checked){
+    private static boolean existingUser(Account checked){
         for (Account existing : accounts) {
             if (existing.getLogin().equals(checked.getLogin()))
                 return true;
@@ -27,7 +23,7 @@ public class ServiceAccess {
         return false;
     }
 
-    public Employee accountInBase(Account checked){
+    public static Employee accountInBase(Account checked){
         for (Account existing : accounts) {
             if(checked.equals(existing))
                 return existing.getOwner();
