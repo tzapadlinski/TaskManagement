@@ -28,17 +28,6 @@ public class LoginTest extends Application {
     }
 
     public static void main(String[] args) {
-        ServiceAccess.addAccount(new Account("adam", "malysz"),
-                new Manager(1, "Adam", "Malysz"));
-        ServiceAccess.addAccount(new Account("mario", "pudzian"),
-                new Worker(2, "Mariusz", "Pudzianowski", Position.TESTER));
-        ServiceAccess.addAccount(new Account("kubica", "kubica"),
-                new Worker(3, "Robert", "Kubica", Position.PROGRAMISTA));
         launch();
-    }
-
-    public void changeScene(String fxml) throws IOException {
-        Parent pane = FXMLLoader.load(getClass().getResource(fxml));
-        stg.getScene().setRoot(pane);
     }
 }
