@@ -54,7 +54,7 @@ public class workerController implements Initializable {
         StaticContainer inicjalizacja = new StaticContainer();
         //actionButton.setVisible(false);
         ObservableList<Task> items = FXCollections.observableArrayList ();
-        for(Task i : StaticContainer.workerList.get(1).getTasksList())
+        for(Task i : StaticContainer.workerList.get(0).getTasksList())
         {
             items.add(i);
             System.out.println(i);
@@ -116,21 +116,19 @@ public class workerController implements Initializable {
 
 
     public void switchToTaskScene(ActionEvent event) throws IOException {
-              currentTask = (Task) taskListView.getSelectionModel().getSelectedItem();
-              currentTaskString = currentTask.getShortcut();
+        currentTask = (Task) taskListView.getSelectionModel().getSelectedItem();
 
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("task_scene.fxml"));
-            root = loader.load();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("task_scene.fxml"));
+        root = loader.load();
 
-            taskController taskController = loader.getController();
-            taskController.setName(currentTaskString);
-            taskController.setWorkerAndTask(StaticContainer.workerList.get(0), StaticContainer.workerList.get(0).getTasksList().get(0));
+        taskController taskController = loader.getController();
+        taskController.setWorkerAndTask(StaticContainer.workerList.get(0), StaticContainer.workerList.get(0).getTasksList().get(0));
 
-            stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-            scene = new Scene(root);
-            stage.setScene(scene);
-            stage.setTitle("Okno zadania");
-            stage.show();
+        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.setTitle("Okno zadania");
+        stage.show();
 
     }
 

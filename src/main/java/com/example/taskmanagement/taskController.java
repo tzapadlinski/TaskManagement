@@ -1,8 +1,6 @@
 package com.example.taskmanagement;
 
-import com.structure.StaticContainer;
-import com.structure.Task;
-import com.structure.Worker;
+import com.structure.*;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -20,29 +18,70 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.ResourceBundle;
 
-public class taskController{
-    private Worker worker;
-    private Task task;
-    @FXML
-    Label taskLabel;
-    //dsadasdhjg
+public class taskController {
 
     @FXML
+    private ListView dataListView;
+    @FXML
+    Label taskLabel;
+    @FXML
     private Button endTaskButton;
+
+    private Worker worker;
+    private Task task;
+
 
     public void setWorkerAndTask(Worker worker, Task task) {
         this.worker = worker;
         this.task = task;
+
+        this.setName(task.getShortcut());
+        this.loadList();
+    }
+
+    public void loadList() {
+        StaticContainer inicjalizacja = new StaticContainer();
+        ObservableList<String> items = FXCollections.observableArrayList ();
+
+        LocalDate deadline = task.getDeadline();
+        items.add("Deadline: "+ deadline.toString());
+        Manager manager = task.getManager();
+        items.add(manager.toString());
+        String description = task.getDescription();
+        items.add("Opis: "+description);
+        StatusC.stat s = task.getS();
+        items.add("Status: "+s.toString());
+        int id = task.getID();
+        items.add(String.valueOf("id: " +id));
+        LocalDate startDate = task.getStartDate();
+        items.add("Data poczatkowa: "+startDate.toString());
+        String name = task.getName();
+        items.add("Nazwa: "+name);
+        int moduleId = task.getModuleID();
+        items.add(String.valueOf("ID modulu: "+moduleId));
+
+        dataListView.setItems(items);
     }
 
     public void setName(String name) {
         taskLabel.setText(name);
     }
 
+    public void setTask(Task task ) {
+        this.task = task;
+    }
+
     public void endTaskAction(ActionEvent event) throws IOException{
         worker.endTask(task);
+        this.setName(task.getShortcut());
+    }
+
+    public void inProgress(ActionEvent event) throws IOException{
+        worker.taskInProgress(task);
+        this.setName(task.getShortcut());
     }
 
     public void switchToWorkerScene(ActionEvent event) throws IOException {

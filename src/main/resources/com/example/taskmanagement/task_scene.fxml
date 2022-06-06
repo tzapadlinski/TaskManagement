@@ -2,19 +2,21 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="183.0" prefWidth="615.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.taskmanagement.taskController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="407.0" prefWidth="488.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.taskmanagement.taskController">
    <children>
-      <Button layoutX="458.0" layoutY="101.0" mnemonicParsing="false" onAction="#switchToWorkerScene" text="Powróć" />
-      <Button fx:id="endTaskButton" layoutX="105.0" layoutY="101.0" mnemonicParsing="false" onAction="#endTaskAction" text="Ukończono" />
-      <Label fx:id="taskLabel" alignment="CENTER" layoutX="50.0" layoutY="35.0" prefHeight="39.0" prefWidth="515.0" text="Label">
+      <Button layoutX="389.0" layoutY="355.0" mnemonicParsing="false" onAction="#switchToWorkerScene" text="Powrót" />
+      <Button fx:id="endTaskButton" layoutX="227.0" layoutY="355.0" mnemonicParsing="false" onAction="#endTaskAction" text="Ukończono" />
+      <Label fx:id="taskLabel" alignment="CENTER" layoutX="3.0" layoutY="31.0" prefHeight="39.0" prefWidth="482.0" text="Label">
          <font>
             <Font size="27.0" />
 
          </font>
       </Label>
+      <Button fx:id="wRealizacjiButton" layoutX="64.0" layoutY="355.0" mnemonicParsing="false" onAction="#inProgress" text="W realizacji" />
+      <ListView fx:id="dataListView" layoutX="60.0" layoutY="88.0" prefHeight="231.0" prefWidth="368.0" />
    </children>
 </Pane>
-
