@@ -3,14 +3,15 @@ package com.structure;
 public class Employee {
     protected int employeeID;
     protected String firstName;
-    protected String secondName;
+    protected String lastName;
+
 
     public Employee() {}
 
     public Employee(int employeeID, String firstName, String secondName) {
         this.employeeID = employeeID;
         this.firstName = firstName;
-        this.secondName = secondName;
+        this.lastName = secondName;
     }
 
     public int getEmployeeID() {
@@ -19,7 +20,7 @@ public class Employee {
     
     public String getEmployeeData()
     {
-    	return String.valueOf(secondName+" "+firstName);
+    	return String.valueOf(lastName+" "+firstName);
     }
 
 

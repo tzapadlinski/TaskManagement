@@ -27,7 +27,7 @@ public class Manager extends Employee{
 
 	@Override
 	public String toString() {
-		return "Manager [employeeID=" + employeeID + ", firstName=" + firstName + ", secondName=" + secondName + "]";
+		return "Manager [employeeID=" + employeeID + ", firstName=" + firstName + ", secondName=" + lastName + "]";
 	}
 	
 	 public Manager(int employeeID, String firstName, String secondName) {

@@ -38,7 +38,7 @@ public class Worker extends Employee{
     }
 
     public String getName() {
-        return this.firstName + " " + this.secondName;
+        return this.firstName + " " + this.lastName;
     }
 
     public void changeTaskStatus(Task task, StatusC.stat newStatus) throws IndexOutOfBoundsException{
@@ -82,7 +82,7 @@ public class Worker extends Employee{
 
 	@Override
 	public String toString() {
-		return String.valueOf(secondName+" "+firstName);
+		return String.valueOf(lastName+" "+firstName);
 	}
     
     
