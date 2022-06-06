@@ -1,13 +1,11 @@
 package com.structure;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.sql.Connection;
 
-public class ServiceAccess {
+public class ServiceAccess1 {
+	
+    private static ArrayList<Account> accounts = new ArrayList<>();
 
-    public static Connection connection =DriverManager.getConnection(
-            "jdbc:mysql://localhost:3306/sonoo","root","h4rnas");
     public static boolean addAccount(Account account, Employee owner){
         if (existingUser(account))
             return false;
