@@ -44,6 +44,7 @@ public class Worker extends Employee{
         else {
             tasksList.get(taskID).s = StatusC.stat.ukończone;
         }
+
     }
 
     public void taskInProgress(Task task) throws IndexOutOfBoundsException{
@@ -110,5 +111,8 @@ public class Worker extends Employee{
         Collections.sort(this.tasksList, new tasksComparator());
     }
 
-    
+
+
+
+
 }
