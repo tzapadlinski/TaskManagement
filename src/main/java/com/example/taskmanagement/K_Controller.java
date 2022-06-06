@@ -51,6 +51,8 @@ public class K_Controller {
     private Project pSync;
     private Module mSync;
     private Task tSync;
+    private int index;
+   
 
     Stage stage;
 
@@ -171,6 +173,7 @@ public class K_Controller {
             			
             			 ObservableList<String> itemsS = FXCollections.observableArrayList ();
             			 Task t = (Task) unitView.getSelectionModel().getSelectedItem();
+            			 index = unitView.getSelectionModel().getSelectedIndex();
             			 
             			 LocalDate deadline = t.getDeadline();
             			 itemsS.add("Deadline: "+ deadline.toString());
@@ -306,6 +309,7 @@ public class K_Controller {
     	    	 
     	    	 items.add("Nie mozna przydzielic");
     	    	 items.add("Status zadania: "+status);
+    	    	 actionButton.setVisible(false);
     	    	 break;
     	};
     	
@@ -417,6 +421,34 @@ public class K_Controller {
     		     ObservableList<StatusC.stat> itemsS = FXCollections.observableArrayList ();
     		     employeeView.setItems(itemsS);
     		
+    	}else
+    	{
+    		 ObservableList<String> itemsS = FXCollections.observableArrayList ();
+			 Task t = tSync;
+			 
+			 LocalDate deadline = t.getDeadline();
+			 itemsS.add("Deadline: "+ deadline.toString());
+			 Manager manager = t.getManager();
+			 itemsS.add(manager.toString());
+			 String description = t.getDescription();
+			 itemsS.add("Opis: "+description);
+			 StatusC.stat s = t.getS();
+			 itemsS.add("Status: "+s.toString());
+			 int id = t.getID();
+			 itemsS.add(String.valueOf("id: " +id));
+			 LocalDate startDate = t.getStartDate();
+			 itemsS.add("Data poczatkowa: "+startDate.toString());
+			 String name = t.getName();
+			 itemsS.add("Nazwa: "+name);
+			 int moduleId = t.getModuleID();
+			 itemsS.add(String.valueOf("ID modulu: "+moduleId));
+		     
+		     unitView.setItems(itemsS);
+		    
+		     setEmployee(s);
+		     
+		     setTaskStatusButton.setVisible(false);
+		   
     	}
     }
     
@@ -432,10 +464,19 @@ public class K_Controller {
     		{
     			System.out.println(t);
     		}
+    		switch(tSync.getS())
+    		{
+    		case nowy: tSync.setS(StatusC.stat.wRrealizacji); break;
+    		case doPoprawy: tSync.setS(StatusC.stat.poprawiane); break;
+    		case doTestowania: tSync.setS(StatusC.stat.ukończone); break;
+    		}
+    		StaticContainer.taskList.set(index, tSync);
+    		sync();
     		
+    		System.out.println("esfdvevfsdcc");
     	}catch(Exception e)
     	{
-    		e.printStackTrace();
+    		//e.printStackTrace();
     	}
     }
     
