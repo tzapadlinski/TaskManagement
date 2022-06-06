@@ -21,6 +21,8 @@ public class StaticContainer {
 		raportList.add("svegqrcd");
 		raportList.add("svcdgrdsv");
 		Manager m = new Manager(1,"jan","kowalski");
+		Worker w1 = new Worker(1, "Adam", "Nowak", Position.PROGRAMISTA);
+		Worker w2 = new Worker(1, "Adam", "NowakTester", Position.TESTER);
 		
 		Project p = new Project(LocalDate.parse("2020-01-01"),LocalDate.parse("2019-01-01"), m, "Opis 5", StatusC.stat.nowy, 10, "Nazwa 5");
 		Project p2 = new Project(LocalDate.parse("2020-01-01"),LocalDate.parse("2019-01-01"), m, "Opis 6", StatusC.stat.nowy, 10, "Nazwa 6");
@@ -34,6 +36,8 @@ public class StaticContainer {
 			Task t2 = new Task(LocalDate.parse("2020-01-01"),LocalDate.parse("2019-01-01"), "Opis 2 T", StatusC.stat.doTestowania, 10, "Nazwa 2 T",m1);
 			m1.addTask(t1);
 			m2.addTask(t2);
+			w1.addTask(t1);
+			w2.addTask(t2);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -49,9 +53,11 @@ public class StaticContainer {
 		System.out.println("koniec");
 
 		//testy listy pracownika
-		Worker w1 = new Worker(1, "Adam", "Nowak", Position.PROGRAMISTA);
-		w1.dodajPrzykladowyTask(LocalDate.parse("2020-01-01"),LocalDate.parse("2019-01-01"), "Dwie funkcje", StatusC.stat.nowy, 1, "Pierwszy task");
+		
+		//w1.dodajPrzykladowyTask(LocalDate.parse("2020-01-01"),LocalDate.parse("2019-01-01"), "Dwie funkcje", StatusC.stat.nowy, 1, "Pierwszy task");
+		
 		workerList.add(w1);
+		workerList.add(w2);
 
 	}
 

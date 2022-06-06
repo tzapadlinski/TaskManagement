@@ -12,6 +12,7 @@ import com.structure.Unit;
 import com.structure.Worker;
 import com.structure.Manager;
 import com.structure.Module;
+import com.structure.Position;
 
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -217,6 +218,7 @@ public class K_Controller {
     	setTaskStatusButton.setVisible(false);
 	     ObservableList<StatusC.stat> itemsS = FXCollections.observableArrayList ();
 	     employeeView.setItems(itemsS);
+	     
     	if(activ == activeView.module)
     	{
     		ObservableList<Project> itemsP = FXCollections.observableArrayList ();
@@ -262,8 +264,11 @@ public class K_Controller {
     		case nowy:
     	        for(Worker i : StaticContainer.workerList)
     	        {
-    	        	items.add(i.getEmployeeData());
-    	        	System.out.println(i);
+    	        	if(i.getPosition() != Position.TESTER)
+    	        	{
+    	        		items.add(i.getEmployeeData());
+    	        		System.out.println(i);
+    	        	}
     	        }
     	        buttonText = "Przydziel pracownika";
     	        break;
@@ -271,17 +276,24 @@ public class K_Controller {
     			
     	        for(Worker i : StaticContainer.workerList)
     	        {
-    	        	items.add(i.getEmployeeData());
-    	        	System.out.println(i);
+    	        	if(i.getPosition() != Position.TESTER)
+    	        	{
+    	        		items.add(i.getEmployeeData());
+    	        		System.out.println(i);
+    	        	}
     	        }
     	        buttonText = "Przydziel pracownika";
     	        break;
     		case doTestowania:
     			
-    	        for(Tester i : StaticContainer.testerList)
+    	        for(Worker i : StaticContainer.workerList)
     	        {
-    	        	items.add(i.getEmployeeData());
-    	        	System.out.println(i);
+    	        	if(i.getPosition() == Position.TESTER)
+    	        	{
+    	        		items.add(i.getEmployeeData());
+    	        		System.out.println(i);
+    	        	}
+    	        	
     	        }
     	        buttonText = "Przydziel testera";
     	        break;
