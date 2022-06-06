@@ -60,7 +60,7 @@ public class StaticContainer {
 		System.out.println("koniec");
 
 		//testy listy pracownika
-		
+		//
 		//w1.dodajPrzykladowyTask(LocalDate.parse("2020-01-01"),LocalDate.parse("2019-01-01"), "Dwie funkcje", StatusC.stat.nowy, 1, "Pierwszy task");
 		
 		workerList.add(w1);

@@ -117,7 +117,6 @@ public class workerController implements Initializable {
 
     public void updateList() {
         this.currentWorker.refreshTasks();
-
         StaticContainer inicjalizacja = new StaticContainer();
         ObservableList<Task> items = FXCollections.observableArrayList ();
         for(Task i : currentWorker.getTasksList())

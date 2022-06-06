@@ -13,7 +13,6 @@ public class Task extends Unit {
 			throw new Exception("blad daty");
 		
 		moduleID = mod.getID();
-		
 	}
 
 	//TYLKO DO TESTOW
