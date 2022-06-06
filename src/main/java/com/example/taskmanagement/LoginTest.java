@@ -36,9 +36,4 @@ public class LoginTest extends Application {
                 new Worker(3, "Robert", "Kubica", Position.PROGRAMISTA));
         launch();
     }
-
-    public void changeScene(String fxml) throws IOException {
-        Parent pane = FXMLLoader.load(getClass().getResource(fxml));
-        stg.getScene().setRoot(pane);
-    }
 }
