@@ -25,6 +25,22 @@ public class Worker extends Employee{
 
     }
 
+    public void taskInProgress(Task task) throws IndexOutOfBoundsException{
+        int taskID = findTaskID(task);
+
+        if(taskID < 0 || taskID >= tasksList.size()) {
+            throw new IndexOutOfBoundsException("Nie ma takiego zadania na liscie pracownika!");
+        }
+        else {
+            tasksList.get(taskID).s = StatusC.stat.wRrealizacji;
+        }
+
+    }
+
+    public String getName() {
+        return this.firstName + " " + this.secondName;
+    }
+
     public void changeTaskStatus(Task task, StatusC.stat newStatus) throws IndexOutOfBoundsException{
         int taskID = findTaskID(task);
         if(taskID < 0 || taskID >= tasksList.size()) {
@@ -47,18 +63,6 @@ public class Worker extends Employee{
         return -1;
     }
 
-    public void dodajPrzykladowyTask(LocalDate deadline, LocalDate start, String description, StatusC.stat s, int id, String name) {
-        Task task;
-        try {
-            task = new Task(deadline, start, description, s, id, name);
-            this.tasksList.add(task);
-        } catch (Exception e)
-        {
-            System.out.println("Nie udalo sie utworzyc tasku");
-        }
-
-
-    }
 
     public void setPosition(Position position) {
         this.position = position;
