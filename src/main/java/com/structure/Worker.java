@@ -37,6 +37,10 @@ public class Worker extends Employee{
 
     }
 
+    public String getName() {
+        return this.firstName + " " + this.secondName;
+    }
+
     public void changeTaskStatus(Task task, StatusC.stat newStatus) throws IndexOutOfBoundsException{
         int taskID = findTaskID(task);
         if(taskID < 0 || taskID >= tasksList.size()) {

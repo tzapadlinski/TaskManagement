@@ -29,32 +29,31 @@ import java.util.ResourceBundle;
 public class workerController implements Initializable {
     @FXML
     private Button logoutButton;
-
     @FXML
     private Button enterTaskButton;
-
     @FXML
     private Pane logoutPane;
-
     @FXML
     private ListView taskListView;
+    @FXML
+    private Label workerNameLabel;
 
     private String currentTaskString;
     private Task currentTask;
-
+    private Worker currentWorker;
     private Stage stage;
     private Scene scene;
     private Parent root;
-    //fasasfasf
-
     @FXML
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
         StaticContainer inicjalizacja = new StaticContainer();
+
+        setCurrentWorker(StaticContainer.workerList.get(0));
+
         //actionButton.setVisible(false);
         ObservableList<Task> items = FXCollections.observableArrayList ();
-        for(Task i : StaticContainer.workerList.get(0).getTasksList())
+        for(Task i : currentWorker.getTasksList())
         {
             items.add(i);
             System.out.println(i);
@@ -132,4 +131,34 @@ public class workerController implements Initializable {
 
     }
 
+    public void setCurrentWorker(Worker worker) {
+        this.currentWorker = worker;
+        this.workerNameLabel.setText(worker.getName());
+    }
+
+    public void updateList() {
+        this.setCurrentWorker(StaticContainer.workerList.get(0));
+
+        StaticContainer inicjalizacja = new StaticContainer();
+        //actionButton.setVisible(false);
+        ObservableList<Task> items = FXCollections.observableArrayList ();
+        for(Task i : currentWorker.getTasksList())
+        {
+            items.add(i);
+            System.out.println(i);
+        }
+        taskListView.setItems(items);
+
+
+        /*
+         taskListView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observableValue, String s, String t1) {
+                currentTaskString = taskListView.getSelectionModel().getSelectedItem();
+
+            }
+        });
+         */
+
+    }
 }

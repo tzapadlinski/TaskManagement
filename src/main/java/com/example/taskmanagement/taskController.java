@@ -30,6 +30,7 @@ public class taskController {
     @FXML
     private Button endTaskButton;
 
+
     private Worker worker;
     private Task task;
 
