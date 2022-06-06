@@ -13,6 +13,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 public class LoginController {
     @FXML
@@ -24,7 +25,7 @@ public class LoginController {
     @FXML
     private Label label;
 
-    public void log(ActionEvent e) throws IOException {
+    public void log(ActionEvent e) throws IOException, SQLException {
         String login = userName.getText().toString();
         String pass = password.getText().toString();
         if (login.isEmpty() || pass.isEmpty()) {
@@ -49,7 +50,7 @@ public class LoginController {
                     changeScene("hello-view_k.fxml");
                     break;
                 default:
-                    changeScene("Manager_fx.fxml");
+                    changeScene("hello-view_k.fxml");
                     break;
             }
         }
