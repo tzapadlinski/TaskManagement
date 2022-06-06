@@ -48,6 +48,9 @@ public class K_Controller {
     
     private enum activeView {project, module, task,taskFocused};
     private activeView activ;
+    private Project pSync;
+    private Module mSync;
+    private Task tSync;
 
     Stage stage;
 
@@ -108,6 +111,7 @@ public class K_Controller {
             		     setTaskStatusButton.setVisible(false);
             		     ObservableList<StatusC.stat> itemsS = FXCollections.observableArrayList ();
             		     employeeView.setItems(itemsS);
+            		     pSync = p;
             		}else if(event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 1)
             		{
             			System.out.println("selected " + unitView.getSelectionModel().getSelectedItem());
@@ -143,6 +147,7 @@ public class K_Controller {
             		     setTaskStatusButton.setVisible(false);
             		     ObservableList<StatusC.stat> itemsS = FXCollections.observableArrayList ();
             		     employeeView.setItems(itemsS);
+            		     mSync = m;
             		}else if(event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 1)
             		{
             			System.out.println("selected " + unitView.getSelectionModel().getSelectedItem());
@@ -189,7 +194,7 @@ public class K_Controller {
             		     setEmployee(s);
             		     
             		     setTaskStatusButton.setVisible(false);
-            		     
+            		     tSync = t;
             		     
             		}else if(event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 1)
             		{
@@ -257,7 +262,7 @@ public class K_Controller {
     private void setEmployee(StatusC.stat status)
     {
     	String buttonText = "";
-    	ObservableList<String> items = FXCollections.observableArrayList ();
+    	ObservableList items = FXCollections.observableArrayList ();
     	switch (status)
     	{
     		
@@ -266,7 +271,7 @@ public class K_Controller {
     	        {
     	        	if(i.getPosition() != Position.TESTER)
     	        	{
-    	        		items.add(i.getEmployeeData());
+    	        		items.add(i);
     	        		System.out.println(i);
     	        	}
     	        }
@@ -278,7 +283,7 @@ public class K_Controller {
     	        {
     	        	if(i.getPosition() != Position.TESTER)
     	        	{
-    	        		items.add(i.getEmployeeData());
+    	        		items.add(i);
     	        		System.out.println(i);
     	        	}
     	        }
@@ -290,7 +295,7 @@ public class K_Controller {
     	        {
     	        	if(i.getPosition() == Position.TESTER)
     	        	{
-    	        		items.add(i.getEmployeeData());
+    	        		items.add(i);
     	        		System.out.println(i);
     	        	}
     	        	
@@ -299,7 +304,8 @@ public class K_Controller {
     	        break;
     	     default:
     	    	 
-    	    	 items.add("Nie mozna przydzielic, status zadania: "+status);
+    	    	 items.add("Nie mozna przydzielic");
+    	    	 items.add("Status zadania: "+status);
     	    	 break;
     	};
     	
@@ -317,6 +323,41 @@ public class K_Controller {
     	Unit u = (Unit) unitView.getSelectionModel().getSelectedItem();
     	StatusC.stat s = (StatusC.stat) employeeView.getSelectionModel().getSelectedItem();
     	u.setS(s);
+    	if(u instanceof Project)
+    		{
+    			//System.out.println("adada");
+    			List<Module> mList = ((Project) u).getModuleSet();
+    			
+    			for(Module m : mList)
+    			{
+    				List<Task> tList = m.getTasksSet();
+    				
+    				for(Task t : tList)
+    				{
+    					if((t.getS()!=StatusC.stat.anulowane)&&(t.getS()!=StatusC.stat.ukończone))
+    					{
+    						t.setS(s);
+    					}
+    				}
+    				
+    				if((m.getS()!=StatusC.stat.anulowane)&&(m.getS()!=StatusC.stat.ukończone))
+					{
+						m.setS(s);
+					}
+    			}
+    			
+    		}else if(u instanceof Module)
+    		{
+    			List<Task> tList = ((Module) u).getTasksSet();
+    			
+    			for(Task t : tList)
+    			{ 				
+    				if((t.getS()!=StatusC.stat.anulowane)&&(t.getS()!=StatusC.stat.ukończone))
+					{
+						t.setS(s);
+					}
+    			}
+    		}
     	sync();
     }
     
@@ -332,14 +373,17 @@ public class K_Controller {
             	//System.out.println(i);
             }
             unitView.setItems(items);
+            setTaskStatusButton.setVisible(false);
+		    ObservableList<StatusC.stat> itemsS = FXCollections.observableArrayList ();
+		    employeeView.setItems(itemsS);
     	}
     	else if(activ == activeView.module)
     	{
     		
-    			System.out.println("clicked on " + unitView.getSelectionModel().getSelectedItem());
+    			 System.out.println("clicked on " + unitView.getSelectionModel().getSelectedItem());
     			
     			 ObservableList<Module> itemsM = FXCollections.observableArrayList ();
-    			 Project p = (Project) unitView.getSelectionModel().getSelectedItem();
+    			 Project p = pSync;
     			 List<Module> mList = p.getModuleSet();
     		     for(Module i : mList)
     		     {
@@ -347,7 +391,7 @@ public class K_Controller {
     		       	//System.out.println(i);
     		     }
     		     unitView.setItems(itemsM);
-    		     activ = activeView.module;
+    		     
     		     StaticContainer.setModuleList(mList);
     		     setTaskStatusButton.setVisible(false);
     		     ObservableList<StatusC.stat> itemsS = FXCollections.observableArrayList ();
@@ -356,10 +400,10 @@ public class K_Controller {
     	}else if(activ == activeView.task)
     	{
     		
-    			System.out.println("clicked on " + unitView.getSelectionModel().getSelectedItem());
+    			 System.out.println("clicked on " + unitView.getSelectionModel().getSelectedItem());
     			
     			 ObservableList<Task> itemsT = FXCollections.observableArrayList ();
-    			 Module m = (Module) unitView.getSelectionModel().getSelectedItem();
+    			 Module m = mSync;
     			 List<Task> tList = m.getTasksSet();
     		     for(Task i : tList)
     		     {
@@ -367,12 +411,31 @@ public class K_Controller {
     		       	//System.out.println(i);
     		     }
     		     unitView.setItems(itemsT);
-    		     activ = activeView.task;
+    		     
     		     StaticContainer.setTaskList(tList);
     		     setTaskStatusButton.setVisible(false);
     		     ObservableList<StatusC.stat> itemsS = FXCollections.observableArrayList ();
     		     employeeView.setItems(itemsS);
     		
+    	}
+    }
+    
+    
+    public void setEmployeeOnClick(ActionEvent event)
+    {
+    	try {
+    		System.out.println("esfdvc");
+    		Worker w = (Worker) employeeView.getSelectionModel().getSelectedItem();
+    		w.addTask(tSync);
+    		System.out.println("esfdvc");
+    		for(Task t : w.getTasksList())
+    		{
+    			System.out.println(t);
+    		}
+    		
+    	}catch(Exception e)
+    	{
+    		e.printStackTrace();
     	}
     }
     

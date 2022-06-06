@@ -75,4 +75,11 @@ public class Worker extends Employee{
     public Position getPosition() {
         return position;
     }
+
+	@Override
+	public String toString() {
+		return String.valueOf(secondName+" "+firstName);
+	}
+    
+    
 }
