@@ -67,4 +67,8 @@ public class Worker extends Employee{
     public ArrayList<Task> getTasksList() {
         return tasksList;
     }
+
+    public Position getPosition() {
+        return position;
+    }
 }
