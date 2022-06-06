@@ -1,7 +1,9 @@
 package com.example.taskmanagement;
 
+import com.structure.Project;
 import com.structure.StaticContainer;
 import com.structure.Task;
+import com.structure.Worker;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -21,6 +23,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class workerController implements Initializable {
@@ -34,7 +37,7 @@ public class workerController implements Initializable {
     private Pane logoutPane;
 
     @FXML
-    private ListView<String> taskListView = new ListView<>();
+    private ListView taskListView;
 
     private String currentTaskString;
     private Task currentTask;
@@ -51,21 +54,25 @@ public class workerController implements Initializable {
 
         StaticContainer inicjalizacja = new StaticContainer();
         //actionButton.setVisible(false);
-        ObservableList<String> items = FXCollections.observableArrayList ();
-        for(Task i : StaticContainer.WorkerList.get(0).getTasksList())
+        ObservableList<Task> items = FXCollections.observableArrayList ();
+        for(Task i : StaticContainer.workerList.get(0).getTasksList())
         {
-            items.add(i.getShortcut());
+            items.add(i);
             System.out.println(i);
         }
         taskListView.setItems(items);
 
-        taskListView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+
+        /*
+         taskListView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observableValue, String s, String t1) {
                 currentTaskString = taskListView.getSelectionModel().getSelectedItem();
 
             }
         });
+         */
+
     }
 
     public void logout(ActionEvent event) {
@@ -101,20 +108,22 @@ public class workerController implements Initializable {
 
 
     public void switchToTaskScene(ActionEvent event) throws IOException {
-        if(currentTaskString != null) {
+              currentTask = (Task) taskListView.getSelectionModel().getSelectedItem();
+              currentTaskString = currentTask.getShortcut();
+
             FXMLLoader loader = new FXMLLoader(getClass().getResource("task_scene.fxml"));
             root = loader.load();
 
             taskController taskController = loader.getController();
             taskController.setName(currentTaskString);
-            taskController.setWorkerAndTask(StaticContainer.WorkerList.get(0), StaticContainer.WorkerList.get(0).getTasksList().get(0));
+            taskController.setWorkerAndTask(StaticContainer.workerList.get(0), StaticContainer.workerList.get(0).getTasksList().get(0));
 
             stage = (Stage)((Node)event.getSource()).getScene().getWindow();
             scene = new Scene(root);
             stage.setScene(scene);
             stage.setTitle("Okno zadania");
             stage.show();
-        }
+
     }
 
 }
