@@ -38,7 +38,6 @@ public class workerController implements Initializable {
     @FXML
     private Label workerNameLabel;
 
-    private String currentTaskString;
     private Task currentTask;
     private Worker currentWorker;
     private Stage stage;
@@ -51,15 +50,12 @@ public class workerController implements Initializable {
 
         setCurrentWorker(StaticContainer.workerList.get(0));
 
-        //actionButton.setVisible(false);
         ObservableList<Task> items = FXCollections.observableArrayList ();
         for(Task i : currentWorker.getTasksList())
         {
             items.add(i);
-            System.out.println(i);
         }
         taskListView.setItems(items);
-
 
         /*
          taskListView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
@@ -70,7 +66,6 @@ public class workerController implements Initializable {
             }
         });
          */
-
     }
 
     public void logout(ActionEvent event) throws IOException {
@@ -115,20 +110,23 @@ public class workerController implements Initializable {
 
 
     public void switchToTaskScene(ActionEvent event) throws IOException {
-        currentTask = (Task) taskListView.getSelectionModel().getSelectedItem();
+        try {
+            currentTask = (Task) taskListView.getSelectionModel().getSelectedItem();
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("task_scene.fxml"));
-        root = loader.load();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("task_scene.fxml"));
+            root = loader.load();
 
-        taskController taskController = loader.getController();
-        taskController.setWorkerAndTask(StaticContainer.workerList.get(0), StaticContainer.workerList.get(0).getTasksList().get(0));
+            taskController taskController = loader.getController();
+            taskController.setWorkerAndTask(currentWorker, currentTask);
 
-        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.setTitle("Okno zadania");
-        stage.show();
-
+            stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+            scene = new Scene(root);
+            stage.setScene(scene);
+            stage.setTitle("Okno zadania");
+            stage.show();
+        } catch (Exception e) {
+            return;
+        }
     }
 
     public void setCurrentWorker(Worker worker) {
@@ -137,28 +135,12 @@ public class workerController implements Initializable {
     }
 
     public void updateList() {
-        this.setCurrentWorker(StaticContainer.workerList.get(0));
-
         StaticContainer inicjalizacja = new StaticContainer();
-        //actionButton.setVisible(false);
         ObservableList<Task> items = FXCollections.observableArrayList ();
         for(Task i : currentWorker.getTasksList())
         {
             items.add(i);
-            System.out.println(i);
         }
         taskListView.setItems(items);
-
-
-        /*
-         taskListView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> observableValue, String s, String t1) {
-                currentTaskString = taskListView.getSelectionModel().getSelectedItem();
-
-            }
-        });
-         */
-
     }
 }
