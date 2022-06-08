@@ -88,7 +88,11 @@ public class Worker extends Employee{
             throw new IndexOutOfBoundsException("Nie ma takiego zadania na liscie pracownika!");
         }
         else {
-            tasksList.get(taskID).s = StatusC.stat.ukończone;
+            try {
+                changeTaskStatus(task, StatusC.stat.ukończone);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
         }
 
     }
@@ -100,7 +104,11 @@ public class Worker extends Employee{
             throw new IndexOutOfBoundsException("Nie ma takiego zadania na liscie pracownika!");
         }
         else {
-            tasksList.get(taskID).s = StatusC.stat.wRrealizacji;
+            try {
+                changeTaskStatus(task, StatusC.stat.wRrealizacji);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
         }
 
     }
@@ -109,17 +117,20 @@ public class Worker extends Employee{
         return this.firstName + " " + this.lastName;
     }
 
-    public void changeTaskStatus(Task task, StatusC.stat newStatus) throws IndexOutOfBoundsException{
+    public void changeTaskStatus(Task task, StatusC.stat newStatus) throws IndexOutOfBoundsException, SQLException {
+
+
         int taskID = findTaskID(task);
         if(taskID < 0 || taskID >= tasksList.size()) {
             throw new IndexOutOfBoundsException("Nie ma takiego zadania na liscie pracownika!");
         }
         else {
+            //zmiana na liscie pracownika
             tasksList.get(taskID).s = newStatus;
 
-            //jesli ukonczone lub anulowane to usun z listy zadan konkretnego pracownika
-            //if(newStatus == StatusC.stat.anulowane || newStatus == StatusC.stat.anulowane)
-            //    tasksList.remove(taskID);
+            //zmiana w bazie danych
+            Statement statement = connection.createStatement();
+            statement.executeUpdate("UPDATE task SET status = \"" + newStatus + "\" WHERE task.taskID = " + this.employeeID + "\n ");
         }
     }
 

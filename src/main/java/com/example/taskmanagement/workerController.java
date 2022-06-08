@@ -1,9 +1,6 @@
 package com.example.taskmanagement;
 
-import com.structure.Project;
-import com.structure.StaticContainer;
-import com.structure.Task;
-import com.structure.Worker;
+import com.structure.*;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -110,7 +107,6 @@ public class workerController implements Initializable {
     }
 
     public void updateList() {
-        //StaticContainer inicjalizacja = new StaticContainer();
         ObservableList<Task> items = FXCollections.observableArrayList ();
         for(Task i : currentWorker.getTasksList())
         {
