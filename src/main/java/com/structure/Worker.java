@@ -1,5 +1,6 @@
 package com.structure;
 
+import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -8,24 +9,14 @@ import java.util.Comparator;
 public class Worker extends Employee{
     protected Position position;
     ArrayList<Task> tasksList;
+    public static Connection connection;
 
-    /**
-     * Komparator sluzacy do sortowania listy z zdaniami koljeno od wRealizacji do ukończonych
-     */
-    class tasksComparator implements Comparator<Task> {
-
-        // override the compare() method
-        @Override
-        public int compare(Task t1, Task t2)
-        {
-            if (t1.s == t2.s)
-                return 0;
-            else if (t1.s == StatusC.stat.ukończone && t2.s != StatusC.stat.ukończone)
-                return 1;
-            else if(t1.s != StatusC.stat.wRrealizacji && t2.s == StatusC.stat.wRrealizacji)
-                return 1;
-            else
-                return -1;
+    static {
+        try {
+            connection = DriverManager.getConnection(
+                    "jdbc:mysql://localhost:3306/accountbase","root","");
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 
@@ -33,6 +24,63 @@ public class Worker extends Employee{
         super(employeeID, firstName, secondName);
         tasksList = new ArrayList<>();
         this.position = position;
+
+        try {
+            loadTasksOnList();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void loadTasksOnList() throws SQLException{
+        Statement statement = connection.createStatement();
+        ResultSet resultSet = statement.executeQuery("SELECT * FROM task JOIN employee_task ON task.taskID = employee_task.taskID WHERE employee_task.employeeID ="
+                            + this.getEmployeeID() + "\n ");
+
+        while (resultSet.next()) {
+            StatusC.stat stat = StatusC.stat.ukończone;
+
+            switch (resultSet.getString("status")){
+                case "wRealizacji":
+                    stat = StatusC.stat.wRrealizacji;
+                    break;
+                case "anulowane":
+                    stat = StatusC.stat.anulowane;
+                    break;
+                case "doPoprawy":
+                    stat = StatusC.stat.doPoprawy;
+                    break;
+                case "doTestowania":
+                    stat = StatusC.stat.doTestowania;
+                    break;
+                case "nowy":
+                    stat = StatusC.stat.nowy;
+                    break;
+                case "poprawiane":
+                    stat = StatusC.stat.poprawiane;
+                    break;
+                case "przydzielone":
+                    stat = StatusC.stat.przydzielone;
+                    break;
+                case "ukończone":
+                    stat = StatusC.stat.ukończone;
+                    break;
+                default:
+                    stat = StatusC.stat.nowy;
+                    break;
+            }
+
+            try {
+                Task task = new Task(resultSet.getDate("deadline").toLocalDate(), resultSet.getDate("startdate").toLocalDate(), resultSet.getString("description"),
+                        stat, resultSet.getInt("taskID"), resultSet.getString("nazwa"));
+                this.tasksList.add(task);
+                System.out.println(task);
+            }catch (Exception e) {
+                e.printStackTrace();
+            }
+
+        }
+
     }
 
     public void endTask(Task task) throws IndexOutOfBoundsException{
@@ -112,7 +160,25 @@ public class Worker extends Employee{
     }
 
 
+    /**
+     * Komparator sluzacy do sortowania listy z zdaniami koljeno od wRealizacji do ukończonych
+     */
+    class tasksComparator implements Comparator<Task> {
 
+        // override the compare() method
+        @Override
+        public int compare(Task t1, Task t2)
+        {
+            if (t1.s == t2.s)
+                return 0;
+            else if (t1.s == StatusC.stat.ukończone && t2.s != StatusC.stat.ukończone)
+                return 1;
+            else if(t1.s != StatusC.stat.wRrealizacji && t2.s == StatusC.stat.wRrealizacji)
+                return 1;
+            else
+                return -1;
+        }
+    }
 
 
 }

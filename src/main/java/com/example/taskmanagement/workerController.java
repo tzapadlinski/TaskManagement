@@ -56,16 +56,6 @@ public class workerController implements Initializable {
             items.add(i);
         }
         taskListView.setItems(items);
-
-        /*
-         taskListView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> observableValue, String s, String t1) {
-                currentTaskString = taskListView.getSelectionModel().getSelectedItem();
-
-            }
-        });
-         */
     }
 
     public void logout(ActionEvent event) throws IOException {
@@ -92,21 +82,6 @@ public class workerController implements Initializable {
         stage.setTitle("Okno logowania");
         stage.show();
     }
-
-    /*
-    @FXML
-    public void initialize() {
-        StaticContainer inicjalizacja = new StaticContainer();
-        //actionButton.setVisible(false);
-        ObservableList<String> items = FXCollections.observableArrayList ();
-        for(Task i : StaticContainer.WorkerList.get(0).getTasksList())
-        {
-            items.add(i.getShortcut());
-            System.out.println(i);
-        }
-        taskListView.setItems(items);
-    }
-     */
 
 
     public void switchToTaskScene(ActionEvent event) throws IOException {
@@ -143,4 +118,5 @@ public class workerController implements Initializable {
         }
         taskListView.setItems(items);
     }
+
 }
