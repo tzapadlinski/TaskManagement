@@ -6,7 +6,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class StaticContainer {
-	
+
+	public static Employee loggedUser;
+
 	public static List<String> raportList = new ArrayList<>();
 	public static List<Project> projectList = new ArrayList<>();	//x
 	public static List<Module> moduleList = new ArrayList<>();		//x
@@ -252,8 +254,8 @@ public class StaticContainer {
 		StaticContainer.taskList = taskList;
 	}
 	
-	
-	
-	
+	public static void setCurrenLoggedUser(Employee loggedUser) {
+		StaticContainer.loggedUser = loggedUser;
+	}
 
 }
