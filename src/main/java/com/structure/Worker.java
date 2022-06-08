@@ -78,9 +78,7 @@ public class Worker extends Employee{
             }catch (Exception e) {
                 e.printStackTrace();
             }
-
         }
-
     }
 
     public void endTask(Task task) throws IndexOutOfBoundsException{

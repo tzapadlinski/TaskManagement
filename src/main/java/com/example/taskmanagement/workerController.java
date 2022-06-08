@@ -118,5 +118,4 @@ public class workerController implements Initializable {
         }
         taskListView.setItems(items);
     }
-
 }
