@@ -46,7 +46,7 @@ public class workerController implements Initializable {
     @FXML
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        StaticContainer inicjalizacja = new StaticContainer();
+        //StaticContainer inicjalizacja = new StaticContainer();
 
         setCurrentWorker(StaticContainer.workerList.get(0));
 
@@ -135,7 +135,7 @@ public class workerController implements Initializable {
     }
 
     public void updateList() {
-        StaticContainer inicjalizacja = new StaticContainer();
+        //StaticContainer inicjalizacja = new StaticContainer();
         ObservableList<Task> items = FXCollections.observableArrayList ();
         for(Task i : currentWorker.getTasksList())
         {
