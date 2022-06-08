@@ -45,7 +45,7 @@ public class workerController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         //StaticContainer inicjalizacja = new StaticContainer();
 
-        setCurrentWorker(StaticContainer.workerList.get(0));
+        setCurrentWorker((Worker) StaticContainer.loggedUser);
 
         ObservableList<Task> items = FXCollections.observableArrayList ();
         for(Task i : currentWorker.getTasksList())

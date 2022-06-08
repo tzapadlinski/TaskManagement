@@ -35,6 +35,7 @@ public class LoginController {
         }
         Account usersAccount = new Account(login, pass);
         Employee user = ServiceAccess.accountInBase(usersAccount);
+        StaticContainer.setCurrenLoggedUser(user);
         if (user == null){
             label.setText("Nieprawidłowe dane.");
             password.clear();
