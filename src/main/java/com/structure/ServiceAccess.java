@@ -12,7 +12,7 @@ public class ServiceAccess {
     static {
         try {
             connection = DriverManager.getConnection(
-                    "jdbc:mysql://localhost:3306/accountbase","root","h4rnas");
+                    "jdbc:mysql://localhost:3306/accountbase","root","");
         } catch (SQLException e) {
             e.printStackTrace();
         }

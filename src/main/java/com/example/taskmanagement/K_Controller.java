@@ -1,10 +1,14 @@
 package com.example.taskmanagement;
 
 import java.io.IOException;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.List;
 
 import com.structure.Project;
+import com.structure.ServiceAccess;
 import com.structure.StaticContainer;
 import com.structure.StatusC;
 import com.structure.Task;
@@ -219,12 +223,16 @@ public class K_Controller {
             			
             			Project p = (Project) unitView.getSelectionModel().getSelectedItem();
             			StatusC.stat s = p.getS();
+            			
             			if((s==StatusC.stat.anulowane)||(s==StatusC.stat.ukończone))
             				return;
             			
             			ObservableList<StatusC.stat> itemsS = FXCollections.observableArrayList ();
            			 	itemsS.add(StatusC.stat.anulowane);
            			 	itemsS.add(StatusC.stat.ukończone);
+           			 	
+           			 	
+           			 	
            			 	
            			 	employeeView.setItems(itemsS);
            			 	setTaskStatusButton.setVisible(true);
@@ -261,6 +269,8 @@ public class K_Controller {
             			ObservableList<StatusC.stat> itemsS = FXCollections.observableArrayList ();
            			 	itemsS.add(StatusC.stat.anulowane);
            			 	itemsS.add(StatusC.stat.ukończone);
+           			 	
+           			
            			 	
            			 	employeeView.setItems(itemsS);
            			 	setTaskStatusButton.setVisible(true);
@@ -310,6 +320,8 @@ public class K_Controller {
             			ObservableList<StatusC.stat> itemsS = FXCollections.observableArrayList ();
            			 	itemsS.add(StatusC.stat.anulowane);
            			 	itemsS.add(StatusC.stat.ukończone);
+           			 	
+           			 
            			 	
            			 	employeeView.setItems(itemsS);
            			 	setTaskStatusButton.setVisible(true);
@@ -426,10 +438,20 @@ public class K_Controller {
     	Unit u = (Unit) unitView.getSelectionModel().getSelectedItem();
     	StatusC.stat s = (StatusC.stat) employeeView.getSelectionModel().getSelectedItem();
     	u.setS(s);
+    	System.out.println("set task");
     	if(u instanceof Project)
     		{
     			//System.out.println("adada");
     			List<Module> mList = ((Project) u).getModuleSet();
+    			
+    			try {
+   			 		Statement statement = ServiceAccess.connection.createStatement();
+					statement.executeUpdate("UPDATE project set status = \""
+					    + s + "\" where projectID = " + u.getID());
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
     			
     			for(Module m : mList)
     			{
@@ -440,12 +462,29 @@ public class K_Controller {
     					if((t.getS()!=StatusC.stat.anulowane)&&(t.getS()!=StatusC.stat.ukończone))
     					{
     						t.setS(s);
+    						try {
+            			 		Statement statement = ServiceAccess.connection.createStatement();
+    							statement.executeUpdate("UPDATE task set status = \""
+    							    + s + "\" where taskID = " + t.getID());
+    						} catch (SQLException e) {
+    							// TODO Auto-generated catch block
+    							e.printStackTrace();
+    						}
+    						
     					}
     				}
     				
     				if((m.getS()!=StatusC.stat.anulowane)&&(m.getS()!=StatusC.stat.ukończone))
 					{
 						m.setS(s);
+						 try {
+	        			 		Statement statement = ServiceAccess.connection.createStatement();
+								statement.executeUpdate("UPDATE module set status = \""
+								    + s + "\" where moduleID = " + m.getID());
+							} catch (SQLException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
 					}
     			}
     			
@@ -453,13 +492,40 @@ public class K_Controller {
     		{
     			List<Task> tList = ((Module) u).getTasksSet();
     			
+    			 try {
+ 			 		Statement statement = ServiceAccess.connection.createStatement();
+						statement.executeUpdate("UPDATE module set status = \""
+						    + s + "\" where moduleID = " + u.getID());
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+    			
     			for(Task t : tList)
     			{ 				
     				if((t.getS()!=StatusC.stat.anulowane)&&(t.getS()!=StatusC.stat.ukończone))
 					{
 						t.setS(s);
+						try {
+        			 		Statement statement = ServiceAccess.connection.createStatement();
+							statement.executeUpdate("UPDATE task set status = \""
+							    + s + "\" where taskID = " + t.getID());
+						} catch (SQLException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
 					}
     			}
+    		}else
+    		{
+    			try {
+			 		Statement statement = ServiceAccess.connection.createStatement();
+					statement.executeUpdate("UPDATE task set status = \""
+					    + s + "\" where taskID = " + u.getID());
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
     		}
     	sync();
     }
@@ -558,17 +624,38 @@ public class K_Controller {
     		System.out.println("esfdvc");
     		Worker w = (Worker) employeeView.getSelectionModel().getSelectedItem();
     		w.addTask(tSync);
+    		try {
+		 		Statement statement = ServiceAccess.connection.createStatement();
+				statement.executeUpdate("INSERT INTO employee_task values(" + w.getEmployeeID() + ","
+				    + tSync.getID() + ")");
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
     		System.out.println("esfdvc");
     		for(Task t : w.getTasksList())
     		{
     			System.out.println(t);
     		}
+    		StatusC.stat var;
     		switch(tSync.getS())
     		{
-    		case nowy: tSync.setS(StatusC.stat.wRrealizacji); break;
-    		case doPoprawy: tSync.setS(StatusC.stat.poprawiane); break;
-    		case doTestowania: tSync.setS(StatusC.stat.ukończone); break;
+    		case nowy: var = StatusC.stat.wRrealizacji; break;
+    		case doPoprawy: var = StatusC.stat.poprawiane; break;
+    		case doTestowania: var = StatusC.stat.testowane; break;
+    		default : var = StatusC.stat.err;
     		}
+    		tSync.setS(var);
+    		
+    		try {
+		 		Statement statement = ServiceAccess.connection.createStatement();
+				statement.executeUpdate("UPDATE task set status = \""
+				    + var + "\" where taskID = " + tSync.getID());
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+    		
     		StaticContainer.taskList.set(index, tSync);
     		sync();
     		
