@@ -46,7 +46,6 @@ public class taskController {
     }
 
     public void loadList() {
-        //StaticContainer inicjalizacja = new StaticContainer();
         ObservableList<String> items = FXCollections.observableArrayList ();
 
         LocalDate deadline = task.getDeadline();

@@ -23,8 +23,20 @@ public class StaticContainer {
 					"jdbc:mysql://localhost:3306/accountbase","root","");
 			Statement statement = connection.createStatement();
 
+			//loading managers
+			ResultSet resultSet = statement.executeQuery("SELECT * FROM accounts WHERE accounts.position = \"manager\"");
+			while(resultSet.next()) {
+				int id = resultSet.getInt("employeeID");
+				String name = resultSet.getString("firstName");
+				String lastName = resultSet.getString("lastName");
+				String position = resultSet.getString("position");
+				Manager m = new Manager(id,name,lastName);
+
+				managerList.add(m);
+			}
+
 			//loading projects
-			ResultSet resultSet = statement.executeQuery("SELECT * FROM project");
+			resultSet = statement.executeQuery("SELECT * FROM project");
 			while(resultSet.next()){
 				StatusC.stat stat;
 				switch (resultSet.getString("status")){
@@ -57,8 +69,9 @@ public class StaticContainer {
 						break;
 
 				}
+				//TODO - przypisany jest pierwszy na liscie manager, zmienic na losowy albo ktory ma mniej
 				projectList.add(new Project(resultSet.getDate("deadline").toLocalDate(),
-						resultSet.getDate("startdate").toLocalDate(), null,
+						resultSet.getDate("startdate").toLocalDate(), managerList.get(0),
 						resultSet.getString("description"), stat,
 						resultSet.getInt("projectID"), resultSet.getString("nazwa")));
 			}
@@ -192,6 +205,8 @@ public class StaticContainer {
 				}
 				workerList.add(worker);
 			}
+
+
 
 		} catch (SQLException e) {
 			e.printStackTrace();

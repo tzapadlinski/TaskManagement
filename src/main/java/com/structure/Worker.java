@@ -25,11 +25,14 @@ public class Worker extends Employee{
         tasksList = new ArrayList<>();
         this.position = position;
 
+        /*
         try {
             loadTasksOnList();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+
+         */
     }
 
     public void loadTasksOnList() throws SQLException{
