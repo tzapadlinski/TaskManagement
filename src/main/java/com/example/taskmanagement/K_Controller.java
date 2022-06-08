@@ -1,5 +1,6 @@
 package com.example.taskmanagement;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -18,6 +19,10 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
@@ -56,7 +61,7 @@ public class K_Controller {
 
     Stage stage;
 
-    public void logout(ActionEvent event) {
+    public void logout(ActionEvent event) throws  IOException{
         //dodanie nowego okna z potwierdzeniem
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Wylogowywanie");
@@ -69,17 +74,111 @@ public class K_Controller {
             stage = (Stage) logoutPane.getScene().getWindow();
             System.out.println("Wylogowano!");
             stage.close();
+			switchToLogout(event);
         }
     }
-    
-    
+
+	public void switchToLogout(ActionEvent event) throws IOException {
+		Parent root = FXMLLoader.load(getClass().getResource("loginBox.fxml"));
+		Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+		Scene scene = new Scene(root);
+		stage.setScene(scene);
+		stage.setTitle("Okno logowania");
+		stage.show();
+	}
+
+	public void sync2(ActionEvent event)
+	{
+		if(activ == activeView.project)
+		{
+			ObservableList<Project> items = FXCollections.observableArrayList ();
+			for(Project i : StaticContainer.projectList)
+			{
+				items.add(i);
+				//System.out.println(i);
+			}
+			unitView.setItems(items);
+			setTaskStatusButton.setVisible(false);
+			ObservableList<StatusC.stat> itemsS = FXCollections.observableArrayList ();
+			employeeView.setItems(itemsS);
+		}
+		else if(activ == activeView.module)
+		{
+
+			System.out.println("clicked on " + unitView.getSelectionModel().getSelectedItem());
+
+			ObservableList<Module> itemsM = FXCollections.observableArrayList ();
+			Project p = pSync;
+			List<Module> mList = p.getModuleSet();
+			for(Module i : mList)
+			{
+				itemsM.add(i);
+				//System.out.println(i);
+			}
+			unitView.setItems(itemsM);
+
+			StaticContainer.setModuleList(mList);
+			setTaskStatusButton.setVisible(false);
+			ObservableList<StatusC.stat> itemsS = FXCollections.observableArrayList ();
+			employeeView.setItems(itemsS);
+
+		}else if(activ == activeView.task)
+		{
+
+			System.out.println("clicked on " + unitView.getSelectionModel().getSelectedItem());
+
+			ObservableList<Task> itemsT = FXCollections.observableArrayList ();
+			Module m = mSync;
+			List<Task> tList = m.getTasksSet();
+			for(Task i : tList)
+			{
+				itemsT.add(i);
+				//System.out.println(i);
+			}
+			unitView.setItems(itemsT);
+
+			StaticContainer.setTaskList(tList);
+			setTaskStatusButton.setVisible(false);
+			ObservableList<StatusC.stat> itemsS = FXCollections.observableArrayList ();
+			employeeView.setItems(itemsS);
+
+		}else
+		{
+			ObservableList<String> itemsS = FXCollections.observableArrayList ();
+			Task t = tSync;
+
+			LocalDate deadline = t.getDeadline();
+			itemsS.add("Deadline: "+ deadline.toString());
+			Manager manager = t.getManager();
+			itemsS.add(manager.toString());
+			String description = t.getDescription();
+			itemsS.add("Opis: "+description);
+			StatusC.stat s = t.getS();
+			itemsS.add("Status: "+s.toString());
+			int id = t.getID();
+			itemsS.add(String.valueOf("id: " +id));
+			LocalDate startDate = t.getStartDate();
+			itemsS.add("Data poczatkowa: "+startDate.toString());
+			String name = t.getName();
+			itemsS.add("Nazwa: "+name);
+			int moduleId = t.getModuleID();
+			itemsS.add(String.valueOf("ID modulu: "+moduleId));
+
+			unitView.setItems(itemsS);
+
+			setEmployee(s);
+
+			setTaskStatusButton.setVisible(false);
+
+		}
+	}
     
     @FXML
     public void initialize() {
-    	StaticContainer inicjalizacja = new StaticContainer();
+    	//StaticContainer inicjalizacja = new StaticContainer();
         actionButton.setVisible(false);
         setTaskStatusButton.setVisible(false);
-        syncButton.setVisible(false);
+        //syncButton.setVisible(false);
         activ = activeView.project;
         ObservableList<Project> items = FXCollections.observableArrayList ();
         for(Project i : StaticContainer.projectList)
