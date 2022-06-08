@@ -28,6 +28,7 @@ public class LoginTest extends Application {
     }
 
     public static void main(String[] args) {
+        StaticContainer inicjalizacja = new StaticContainer();
         launch();
     }
 }

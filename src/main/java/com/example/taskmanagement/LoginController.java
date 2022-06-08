@@ -41,16 +41,16 @@ public class LoginController {
             return;
         }
         if (user.getClass().equals(Manager.class)){
-            changeScene("hello-view_m.fxml");
+            changeScene("hello-view_k.fxml");
         }
         else if (user.getClass().equals(Worker.class)){
             Position position = ((Worker) user).getPosition();
             switch(position){
                 case TESTER:
-                    changeScene("hello-view_k.fxml");
+                    changeScene("hello-view_m.fxml");
                     break;
                 default:
-                    changeScene("hello-view_k.fxml");
+                    changeScene("hello-view_m.fxml");
                     break;
             }
         }
