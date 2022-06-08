@@ -12,7 +12,7 @@ public class ServiceAccess {
     static {
         try {
             connection = DriverManager.getConnection(
-                    "jdbc:mysql://localhost:3306/accountbase","root","");
+                    "jdbc:mysql://localhost:3306/accountbase","root", "");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -41,26 +41,38 @@ public class ServiceAccess {
         String name = resultSet.getString("firstName");
         String lastName = resultSet.getString("lastName");
         String position = resultSet.getString("position");
-        String logIn = resultSet.getString("userName");
-        Employee ejected = null;
-        if(position.equals("manager"))
-            ejected = new Manager(id, name, lastName);
+        Manager manager = null;
+        Worker worker = null;
+        if(position.equals("manager")) {
+            manager = new Manager(id, name, lastName);
+            return manager;
+        }
         else {
             switch (position) {
                 case "programmer":
-                    ejected = new Worker(id, name, lastName, Position.PROGRAMISTA);
+                    worker = new Worker(id, name, lastName, Position.PROGRAMISTA);
                     break;
                 case "tester":
-                    ejected = new Worker(id, name, lastName, Position.TESTER);
+                    worker = new Worker(id, name, lastName, Position.TESTER);
                     break;
                 case "other":
-                    ejected = new Worker(id, name, lastName, Position.ANALITYK);
+                    worker = new Worker(id, name, lastName, Position.ANALITYK);
                     break;
                 default:
                     return null;
             }
         }
-        return ejected;
+        resultSet = statement.executeQuery("SELECT * FROM employee_task WHERE employeeID = " + worker.getEmployeeID());
+        while(resultSet.next()){
+            int taskId = resultSet.getInt("taskID");
+            for (Task task:StaticContainer.taskList) {
+                if (task.getID() == taskId){
+                    worker.addTask(task);
+                    break;
+                }
+            }
+        }
+        return worker;
     }
 
 }
