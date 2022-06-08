@@ -8,8 +8,8 @@
    <children>
       <ListView fx:id="unitView" layoutX="14.0" layoutY="41.0" prefHeight="346.0" prefWidth="355.0" />
       <Button fx:id="logoutButton" layoutX="482.0" layoutY="16.0" mnemonicParsing="false" onAction="#logout" prefHeight="27.0" prefWidth="104.0" text="Wyloguj" />
-      <Button fx:id="actionButton" layoutX="388.0" layoutY="347.0" mnemonicParsing="false" onAction="#setEmployeeOnClick" prefHeight="25.0" prefWidth="200.0" text="tekst zmienny" />
-      <Button fx:id="setTaskStatusButton" layoutX="385.0" layoutY="306.0" mnemonicParsing="false" onAction="#setTaskStatus" prefHeight="25.0" prefWidth="200.0" text="Ustaw status" />
+      <Button fx:id="actionButton" layoutX="388.0" layoutY="347.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="200.0" text="tekst zmienny" />
+      <Button fx:id="setTaskStatusButton" layoutX="385.0" layoutY="306.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="200.0" text="Ustaw status" />
       <ListView fx:id="employeeView" layoutX="382.0" layoutY="86.0" prefHeight="200.0" prefWidth="200.0" />
       <Button fx:id="syncButton" layoutX="501.0" layoutY="52.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="68.0" text="Sync" />
       <Button id="backButton" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#goBack" text="&lt;--" />
