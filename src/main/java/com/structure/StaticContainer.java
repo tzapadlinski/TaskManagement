@@ -164,6 +164,8 @@ public class StaticContainer {
 				String name = resultSet.getString("firstName");
 				String lastName = resultSet.getString("lastName");
 				String position = resultSet.getString("position");
+				if (position.equals("manager"))
+					continue;
 				Worker worker = null;
 				switch (position) {
 					case "programmer":
