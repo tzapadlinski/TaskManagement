@@ -117,11 +117,13 @@ public class StaticContainer {
 						break;
 					}
 				}
-				moduleList.add(new Module(resultSet.getDate("deadline").toLocalDate(),
+				Module new_ = new Module(resultSet.getDate("deadline").toLocalDate(),
 						resultSet.getDate("startdate").toLocalDate(),
 						resultSet.getString("description"), stat,
 						resultSet.getInt("moduleID"), resultSet.getString("nazwa"),
-						project));
+						project);
+				project.addModule(new_);
+				moduleList.add(new_);
 			}
 
 			//loading tasks
@@ -165,11 +167,13 @@ public class StaticContainer {
 						break;
 					}
 				}
-				taskList.add(new Task(resultSet.getDate("deadline").toLocalDate(),
+				Task new_ = new Task(resultSet.getDate("deadline").toLocalDate(),
 						resultSet.getDate("startdate").toLocalDate(),
 						resultSet.getString("description"), stat,
 						resultSet.getInt("taskID"), resultSet.getString("nazwa"),
-						module));
+						module);
+				taskList.add(new_);
+				module.addTask(new_);
 			}
 
 			//loading tasks
