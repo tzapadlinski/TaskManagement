@@ -15,7 +15,7 @@ public class StaticContainer {
 	public static List<Task> taskList = new ArrayList<>();			//x
 	public static List<Worker> workerList = new ArrayList<>();
 	public static List<Manager> managerList = new ArrayList<>();
-	public static List<Tester> testerList = new ArrayList<>(); //jak bedzie tester
+	public static List<Worker> testerList = new ArrayList<>(); //jak bedzie tester
 	
 	{
 		try {
@@ -207,6 +207,7 @@ public class StaticContainer {
 						}
 					}
 				}
+
 				workerList.add(worker);
 			}
 

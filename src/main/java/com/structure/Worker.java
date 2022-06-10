@@ -92,7 +92,12 @@ public class Worker extends Employee{
         }
         else {
             try {
-                changeTaskStatus(task, StatusC.stat.ukończone);
+                if(this.position == Position.TESTER) {
+                    changeTaskStatus(task, StatusC.stat.ukończone);
+                }
+                else {
+                    changeTaskStatus(task, StatusC.stat.doTestowania);
+                }
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
@@ -167,15 +172,17 @@ public class Worker extends Employee{
 		return String.valueOf(lastName+" "+firstName);
 	}
 
-    public void refreshTasks() {
-        Collections.sort(this.tasksList, new tasksComparator());
+    public void sortTasks() {
+        Collections.sort(this.tasksList, new tasksComparatorByStatus());
+        Collections.sort(this.tasksList, new taskComparatorByStatusAndDate());
+
     }
 
 
     /**
      * Komparator sluzacy do sortowania listy z zdaniami koljeno od wRealizacji do ukończonych
      */
-    class tasksComparator implements Comparator<Task> {
+    class tasksComparatorByStatus implements Comparator<Task> {
 
         // override the compare() method
         @Override
@@ -192,5 +199,36 @@ public class Worker extends Employee{
         }
     }
 
+    class taskComparatorByDate implements Comparator<Task> {
 
+        // override the compare() method
+        @Override
+        public int compare(Task t1, Task t2)
+        {
+            if (t1.deadline.isEqual(t2.deadline))
+                return 0;
+            else if (t1.deadline.isAfter(t2.deadline))
+                return 1;
+            else
+                return -1;
+        }
+    }
+
+    class taskComparatorByStatusAndDate implements Comparator<Task> {
+
+        // override the compare() method
+        @Override
+        public int compare(Task t1, Task t2)
+        {
+            if(t1.s == t2.s) {
+                if (t1.deadline.isEqual(t2.deadline))
+                    return 0;
+                else if (t1.deadline.isAfter(t2.deadline))
+                    return 1;
+                else
+                    return -1;
+            }
+            else return 0;
+        }
+    }
 }

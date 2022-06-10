@@ -44,13 +44,14 @@ public class workerController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         setCurrentWorker(((Worker) StaticContainer.loggedUser));
-
+        currentWorker.sortTasks();
         ObservableList<Task> items = FXCollections.observableArrayList ();
         for(Task i : currentWorker.getTasksList())
         {
             items.add(i);
         }
         taskListView.setItems(items);
+
     }
 
     public void logout(ActionEvent event) throws IOException {
@@ -106,13 +107,13 @@ public class workerController implements Initializable {
 
 
     public void updateList() {
+        currentWorker.sortTasks();
         ObservableList<Task> items = FXCollections.observableArrayList ();
         for(Task i : currentWorker.getTasksList())
         {
             items.add(i);
         }
         taskListView.setItems(items);
+
     }
-
-
 }

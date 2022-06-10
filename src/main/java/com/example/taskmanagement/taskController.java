@@ -100,4 +100,5 @@ public class taskController {
         stage.setTitle("Okno pracownika");
         stage.show();
     }
+
 }
