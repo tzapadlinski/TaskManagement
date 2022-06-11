@@ -1,24 +1,13 @@
 package com.example.taskmanagement;
 
 import java.io.IOException;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.time.LocalDate;
 import java.util.List;
 
-import com.structure.Project;
-import com.structure.ServiceAccess;
-import com.structure.StaticContainer;
-import com.structure.StatusC;
-import com.structure.Task;
-import com.structure.Tester;
-import com.structure.Unit;
-import com.structure.Worker;
-import com.structure.Manager;
-import com.structure.Module;
-import com.structure.Position;
+import com.structure.*;
 
+import com.structure.Module;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -56,6 +45,8 @@ public class K_Controller {
     private Button syncButton;
 	@FXML
 	private Button raporty;
+	@FXML
+	private Button makeLogButton;
     
     private enum activeView {project, module, task,taskFocused};
     private activeView activ;
@@ -728,10 +719,29 @@ public class K_Controller {
     
     
     //Czesc, tu Tomek
-	public void setRaporty(ActionEvent event){
-
+	public void setRaporty(ActionEvent event) throws IOException {
+		Parent root = FXMLLoader.load(getClass().getResource("logScene.fxml"));
+		Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+		Scene scene = new Scene(root);
+		stage.setScene(scene);
+		stage.show();
 	}
     
-
-
+	public void createLog(ActionEvent e) throws IOException {
+		if(pSync == null)
+			return;
+		ProjectLog log = new ProjectLog(pSync.getName());
+		log.setProject(pSync);
+		log.saveProject();
+		try {
+			Connection connection = DriverManager.getConnection(
+					"jdbc:mysql://localhost:3306/accountbase", "root", "");
+			Statement statement = connection.createStatement();
+			ResultSet resultSet = statement.executeQuery(
+					"INSERT INTO logs values ("+ pSync.getName() + ")");
+		} catch (SQLException exception) {
+			exception.printStackTrace();
+		}
+	}
 }
+

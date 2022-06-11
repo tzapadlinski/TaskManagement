@@ -5,12 +5,11 @@ import java.time.LocalDate;
 import java.util.NoSuchElementException;
 
 public class ProjectLog {
-    private boolean succeeded;
     private String fileName;
     private Project project;
 
 
-    ProjectLog(String fileName){
+    public ProjectLog(String fileName){
         this.fileName = fileName;
     }
 
@@ -57,5 +56,24 @@ public class ProjectLog {
 
     public Project getProject() {
         return project;
+    }
+
+    public String getFileName() {
+        return fileName;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("ID projektu: " + project.getID() + "\n");
+        builder.append("Prowadzacy: " + project.getManager().toString() + "\n");
+        builder.append("Opis: " + project.getDescription() + "\n");
+        builder.append("Czas rozpoczecia: " + project.getStartDate() + "\n");
+        builder.append("Czas zakonczenia: " + project.getDeadline() + "\n");
+        return builder.toString();
+    }
+
+    public void setProject(Project project) {
+        this.project = project;
     }
 }
