@@ -54,6 +54,8 @@ public class K_Controller {
     private Button setTaskStatusButton;
     @FXML
     private Button syncButton;
+	@FXML
+	private Button raporty;
     
     private enum activeView {project, module, task,taskFocused};
     private activeView activ;
@@ -666,7 +668,10 @@ public class K_Controller {
     	}
     }
     
-    
+    //Czesc, tu Tomek
+	public void setRaporty(ActionEvent event){
+
+	}
     
 
 

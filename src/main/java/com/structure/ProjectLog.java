@@ -1,36 +1,61 @@
 package com.structure;
 
+import java.io.*;
 import java.time.LocalDate;
+import java.util.NoSuchElementException;
 
 public class ProjectLog {
     private boolean succeeded;
-    private String filename;
-    //private com.structure.Manager projectLeader;
-    //private []com.structure.Employee employees;
-    private LocalDate startTimestamp;
-    private LocalDate deadline;
-    private String details;
+    private String fileName;
+    private Project project;
 
-    //TODO
-    ProjectLog(){
 
+    ProjectLog(String fileName){
+        this.fileName = fileName;
     }
 
     //TODO
     public static ProjectLog loadProject(String fileName){
-        return null;
+        ProjectLog log = new ProjectLog(fileName);
+        try {
+            FileInputStream fileInputStream = new FileInputStream(new File("src\\main\\resources\\com\\example\\taskmanagement\\projectLogs\\"
+                    + fileName + ".bin"));
+            ObjectInputStream o = new ObjectInputStream(fileInputStream);
+            log.project = (Project) o.readObject();
+            o.close();
+            fileInputStream.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return log;
     }
 
-    //TODO
-    public void saveProject(String fileName){
 
+    public void saveProject(){
+        try {
+            if (project == null)
+                throw new NoSuchFieldException();
+            FileOutputStream fileOutputStream = new FileOutputStream(new File("src\\main\\resources\\com\\example\\taskmanagement\\projectLogs\\"
+                    + fileName + ".bin"));
+            ObjectOutputStream o = new ObjectOutputStream(fileOutputStream);
+            o.writeObject(project);
+            o.close();
+            fileOutputStream.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (NoSuchFieldException e){
+            System.out.println("Należy wczytać projekt do klasy.");
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
-    //TODO
-    @Override
-    public String toString() {
-        return "com.structure.ProjectLog{" +
-                "details='" + details + '\'' +
-                '}';
+    public Project getProject() {
+        return project;
     }
 }
