@@ -302,6 +302,15 @@ public class K_Controller {
             			 itemsS.add("Nazwa: "+name);
             			 int moduleId = t.getModuleID();
             			 itemsS.add(String.valueOf("ID modulu: "+moduleId));
+            			 
+            			 if((showWorker(t.getID()) != null))
+            			 {
+            				 itemsS.add(showWorker(t.getID()));
+            			 }
+            			 if(showTester(t.getID()) != null)
+            			 {
+            				 itemsS.add(showTester(t.getID()));
+            			 }
             		     
             		     unitView.setItems(itemsS);
             		     activ = activeView.taskFocused;
@@ -609,6 +618,15 @@ public class K_Controller {
 			 itemsS.add("Nazwa: "+name);
 			 int moduleId = t.getModuleID();
 			 itemsS.add(String.valueOf("ID modulu: "+moduleId));
+			 
+			 if(showWorker(t.getID()) != null)
+			 {
+				 itemsS.add(showWorker(t.getID()));
+			 }
+			 if(showTester(t.getID()) != null)
+			 {
+				 itemsS.add(showTester(t.getID()));
+			 }
 		     
 		     unitView.setItems(itemsS);
 		    
@@ -642,7 +660,7 @@ public class K_Controller {
     		StatusC.stat var;
     		switch(tSync.getS())
     		{
-    		case nowy: var = StatusC.stat.wRrealizacji; break;
+    		case nowy: var = StatusC.stat.wRealizacji; break;
     		case doPoprawy: var = StatusC.stat.poprawiane; break;
     		case doTestowania: var = StatusC.stat.testowane; break;
     		default : var = StatusC.stat.err;
@@ -667,6 +685,47 @@ public class K_Controller {
     		//e.printStackTrace();
     	}
     }
+    
+    public String showWorker(int id)
+    {
+    	
+		try {
+			Statement statement = ServiceAccess.connection.createStatement();
+			ResultSet r = statement.executeQuery("SELECT * FROM accounts where (position = \"other\" OR position = \"programmer\") AND employeeID in (SELECT "
+					+ " employeeID from employee_task where taskID = "+ id +")");
+			if(r.next())
+			{
+				return String.valueOf("Pracownik odpowiedzialny za zadanie: "+r.getString("firstName") + " " +
+				r.getString("lastName"));
+			}else
+				return null;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
+    }
+    
+    public String showTester(int id)
+    {
+    	
+		try {
+			Statement statement = ServiceAccess.connection.createStatement();
+			ResultSet r = statement.executeQuery("SELECT * FROM accounts where (position = \"tester\" ) AND employeeID in (SELECT "
+					+ " employeeID from employee_task where taskID = "+ id +")");
+			if(r.next())
+			{
+				return String.valueOf("Tester odpowiedzialny za zadanie: "+r.getString("firstName") + " " +
+				r.getString("lastName"));
+			}else
+				return null;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
+    }
+    
     
     //Czesc, tu Tomek
 	public void setRaporty(ActionEvent event){

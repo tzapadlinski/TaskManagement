@@ -41,7 +41,7 @@ public class StaticContainer {
 				StatusC.stat stat;
 				switch (resultSet.getString("status")){
 					case "wRealizacji":
-						stat = StatusC.stat.wRrealizacji;
+						stat = StatusC.stat.wRealizacji;
 						break;
 					case "anulowane":
 						stat = StatusC.stat.anulowane;
@@ -65,7 +65,7 @@ public class StaticContainer {
 						stat = StatusC.stat.ukończone;
 						break;
 					default:
-						stat = StatusC.stat.nowy;
+						stat = StatusC.stat.err;
 						break;
 
 				}
@@ -82,7 +82,7 @@ public class StaticContainer {
 				StatusC.stat stat;
 				switch (resultSet.getString("status")){
 					case "wRealizacji":
-						stat = StatusC.stat.wRrealizacji;
+						stat = StatusC.stat.wRealizacji;
 						break;
 					case "anulowane":
 						stat = StatusC.stat.anulowane;
@@ -106,7 +106,7 @@ public class StaticContainer {
 						stat = StatusC.stat.ukończone;
 						break;
 					default:
-						stat = StatusC.stat.nowy;
+						stat = StatusC.stat.err;
 						break;
 				}
 				int projectID = resultSet.getInt("projectID");
@@ -132,7 +132,7 @@ public class StaticContainer {
 				StatusC.stat stat;
 				switch (resultSet.getString("status")){
 					case "wRealizacji":
-						stat = StatusC.stat.wRrealizacji;
+						stat = StatusC.stat.wRealizacji;
 						break;
 					case "anulowane":
 						stat = StatusC.stat.anulowane;
@@ -156,7 +156,7 @@ public class StaticContainer {
 						stat = StatusC.stat.ukończone;
 						break;
 					default:
-						stat = StatusC.stat.nowy;
+						stat = StatusC.stat.err;
 						break;
 				}
 				int moduleId = resultSet.getInt("moduleID");
@@ -197,9 +197,11 @@ public class StaticContainer {
 						worker = new Worker(id, name, lastName, Position.ANALITYK);
 						break;
 				}
-				resultSet = statement.executeQuery("SELECT * FROM employee_task WHERE employeeID = " + worker.getEmployeeID());
-				while(resultSet.next()){
-					int taskId = resultSet.getInt("taskID");
+				
+				Statement statement1 = connection.createStatement();
+				ResultSet resultSet1 = statement1.executeQuery("SELECT * FROM employee_task WHERE employeeID = " + worker.getEmployeeID());
+				while(resultSet1.next()){
+					int taskId = resultSet1.getInt("taskID");
 					for (Task task:StaticContainer.taskList) {
 						if (task.getID() == taskId){
 							worker.addTask(task);

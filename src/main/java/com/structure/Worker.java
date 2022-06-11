@@ -45,7 +45,7 @@ public class Worker extends Employee{
 
             switch (resultSet.getString("status")){
                 case "wRealizacji":
-                    stat = StatusC.stat.wRrealizacji;
+                    stat = StatusC.stat.wRealizacji;
                     break;
                 case "anulowane":
                     stat = StatusC.stat.anulowane;
@@ -69,7 +69,7 @@ public class Worker extends Employee{
                     stat = StatusC.stat.ukończone;
                     break;
                 default:
-                    stat = StatusC.stat.nowy;
+                    stat = StatusC.stat.err;
                     break;
             }
 
@@ -113,7 +113,7 @@ public class Worker extends Employee{
         }
         else {
             try {
-                changeTaskStatus(task, StatusC.stat.wRrealizacji);
+                changeTaskStatus(task, StatusC.stat.wRealizacji);
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
@@ -192,7 +192,7 @@ public class Worker extends Employee{
                 return 0;
             else if (t1.s == StatusC.stat.ukończone && t2.s != StatusC.stat.ukończone)
                 return 1;
-            else if(t1.s != StatusC.stat.wRrealizacji && t2.s == StatusC.stat.wRrealizacji)
+            else if(t1.s != StatusC.stat.wRealizacji && t2.s == StatusC.stat.wRealizacji)
                 return 1;
             else
                 return -1;
