@@ -1,11 +1,12 @@
 package com.structure;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class Module extends Unit {
+public class Module extends Unit implements Serializable {
 	
 	private int projectID;
 

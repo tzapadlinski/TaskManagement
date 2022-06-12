@@ -1,12 +1,13 @@
 package com.structure;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 
 
-public class Project extends Unit {
+public class Project extends Unit implements Serializable {
 
 	public Project(LocalDate deadline,LocalDate start, Manager manager, String description, StatusC.stat s, int id, String name) {
 		super(deadline, start, manager, description, s, id, name);

@@ -1,8 +1,9 @@
 package com.structure;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
-public class Manager extends Employee{
+public class Manager extends Employee implements Serializable {
 
     //TODO - zmiana wyjatku
     public void extendProjectTime(Project project, LocalDate newProjectDeadline) //throws Wyjatek zrobiony przez Kube

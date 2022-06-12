@@ -1,8 +1,9 @@
 package com.structure;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
-public abstract class Unit {
+public abstract class Unit implements Serializable {
 	
 	protected int id;
 	protected LocalDate deadline;

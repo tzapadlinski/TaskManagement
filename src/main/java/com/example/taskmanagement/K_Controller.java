@@ -51,6 +51,7 @@ public class K_Controller {
     private enum activeView {project, module, task,taskFocused};
     private activeView activ;
     private Project pSync;
+	private Project pSync2;
     private Module mSync;
     private Task tSync;
     private int index;
@@ -223,9 +224,9 @@ public class K_Controller {
             			ObservableList<StatusC.stat> itemsS = FXCollections.observableArrayList ();
            			 	itemsS.add(StatusC.stat.anulowane);
            			 	itemsS.add(StatusC.stat.ukończone);
+
            			 	
-           			 	
-           			 	
+           			 	pSync2 = p;
            			 	
            			 	employeeView.setItems(itemsS);
            			 	setTaskStatusButton.setVisible(true);
@@ -728,17 +729,17 @@ public class K_Controller {
 	}
     
 	public void createLog(ActionEvent e) throws IOException {
-		if(pSync == null)
+		if(pSync2 == null)
 			return;
-		ProjectLog log = new ProjectLog(pSync.getName());
-		log.setProject(pSync);
+		ProjectLog log = new ProjectLog(pSync2.getName());
+		log.parseProject(pSync2);
 		log.saveProject();
 		try {
 			Connection connection = DriverManager.getConnection(
 					"jdbc:mysql://localhost:3306/accountbase", "root", "");
 			Statement statement = connection.createStatement();
-			ResultSet resultSet = statement.executeQuery(
-					"INSERT INTO logs values ("+ pSync.getName() + ")");
+			statement.executeUpdate(
+					"CALL addLog(\""+ pSync2.getName() + "\")");
 		} catch (SQLException exception) {
 			exception.printStackTrace();
 		}

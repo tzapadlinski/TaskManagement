@@ -16,6 +16,7 @@ public class StaticContainer {
 	public static List<Worker> workerList = new ArrayList<>();
 	public static List<Manager> managerList = new ArrayList<>();
 	public static List<Worker> testerList = new ArrayList<>(); //jak bedzie tester
+	public static ProjectLog  activeLog;
 	
 	{
 		try {

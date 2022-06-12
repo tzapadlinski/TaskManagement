@@ -2,6 +2,7 @@ package com.example.taskmanagement;
 
 import com.structure.Manager;
 import com.structure.ProjectLog;
+import com.structure.StaticContainer;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -53,7 +54,11 @@ public class LogController implements Initializable {
         raporty.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                log = ProjectLog.loadProject(raporty.getSelectionModel().getSelectedItem());
+                try {
+                    log = ProjectLog.loadProject(raporty.getSelectionModel().getSelectedItem());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         });
     }
@@ -61,11 +66,12 @@ public class LogController implements Initializable {
     public void pressed(ActionEvent e) throws IOException {
         if (log == null)
             return;
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("logView.fxml"));
-        Parent root = fxmlLoader.load();
-        LogViewerController controller = fxmlLoader.getController();
-        controller.display(log.getFileName(), log.toString());
-        //Parent root = FXMLLoader.load(getClass().getResource("logView.fxml"));
+        //FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("logView.fxml"));
+        //Parent root = fxmlLoader.load();
+        //LogViewerController controller = fxmlLoader.getController();
+        //controller.display(log.getFileName(), log.getContent());
+        StaticContainer.activeLog = log;
+        Parent root = FXMLLoader.load(getClass().getResource("logView.fxml"));
         Stage stage = new Stage();
         stage.setTitle("Raport");
         stage.setScene(new Scene(root));

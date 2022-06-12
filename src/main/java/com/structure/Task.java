@@ -1,8 +1,9 @@
 package com.structure;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
-public class Task extends Unit {
+public class Task extends Unit implements Serializable {
 	
 	private int moduleID;
 

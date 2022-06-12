@@ -9,6 +9,7 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.sql.*;
 
 public class LoginTest extends Application {
 
@@ -29,6 +30,20 @@ public class LoginTest extends Application {
 
     public static void main(String[] args) {
         StaticContainer inicjalizacja = new StaticContainer();
+        /*
+        Project zapisywany = StaticContainer.projectList.get(0);
+        ProjectLog log = new ProjectLog(zapisywany.getName());
+        log.setProject(zapisywany);
+        log.saveProject();
+        try {
+            Connection connection = DriverManager.getConnection(
+                    "jdbc:mysql://localhost:3306/accountbase", "root", "");
+            Statement statement = connection.createStatement();
+            statement.executeUpdate(
+                    "INSERT INTO logs values (\""+ zapisywany.getName() + "\")");
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+        }*/
         launch();
     }
 }

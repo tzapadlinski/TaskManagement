@@ -1,6 +1,8 @@
 package com.structure;
 
-public class Employee {
+import java.io.Serializable;
+
+public class Employee implements Serializable {
     protected int employeeID;
     protected String firstName;
     protected String lastName;
