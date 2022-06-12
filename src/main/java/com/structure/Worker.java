@@ -84,11 +84,11 @@ public class Worker extends Employee{
         }
     }
 
-    public void endTask(Task task) throws IndexOutOfBoundsException{
+    public void endTask(Task task) throws MyException{
         int taskID = findTaskID(task);
 
         if(taskID < 0 || taskID >= tasksList.size()) {
-            throw new IndexOutOfBoundsException("Nie ma takiego zadania na liscie pracownika!");
+            throw new MyException("Nie ma takiego zadania na liscie pracownika!");
         }
         else {
             try {
@@ -105,11 +105,11 @@ public class Worker extends Employee{
 
     }
 
-    public void taskInProgress(Task task) throws IndexOutOfBoundsException{
+    public void taskInProgress(Task task) throws MyException{
         int taskID = findTaskID(task);
 
         if(taskID < 0 || taskID >= tasksList.size()) {
-            throw new IndexOutOfBoundsException("Nie ma takiego zadania na liscie pracownika!");
+            throw new MyException("Nie ma takiego zadania na liscie pracownika!");
         }
         else {
             try {
@@ -125,12 +125,12 @@ public class Worker extends Employee{
         return this.firstName + " " + this.lastName;
     }
 
-    public void changeTaskStatus(Task task, StatusC.stat newStatus) throws IndexOutOfBoundsException, SQLException {
+    public void changeTaskStatus(Task task, StatusC.stat newStatus) throws MyException, SQLException {
 
 
         int taskID = findTaskID(task);
         if(taskID < 0 || taskID >= tasksList.size()) {
-            throw new IndexOutOfBoundsException("Nie ma takiego zadania na liscie pracownika!");
+            throw new MyException("Nie ma takiego zadania na liscie pracownika!");
         }
         else {
             //zmiana na liscie pracownika
